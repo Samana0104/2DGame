@@ -8,10 +8,10 @@ namespace MyProject
 	class MyImageButton : public MyButton
 	{
 	private:
-		MyCamera* mCamera = nullptr;
-		MyObject mRenderSprite;
+		MyCamera*		mCamera = nullptr;
+		MyObject		mRenderSprite;
 		SpriteComponent mPointer;
-		wstringV mText;
+		wstringV		mText;
 
 	public:
 		MyObject mImage;

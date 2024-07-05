@@ -3,6 +3,7 @@
 #include <initializer_list>
 #include <vector>
 #include <string>
+#include <queue>
 #include <map>
 #include <list>
 #include <algorithm>
@@ -29,6 +30,7 @@
 #include "Singleton.h"
 #include "MyWindow.h"
 #include "D3Device.h"
+#include "ResourceHandler.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d2d1.lib")

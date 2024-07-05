@@ -17,6 +17,7 @@ namespace MyProject
 	{
 	private:
 		SelectState mCurrentState = SelectState::DEFAULT;
+
 		bool mIsMovable = false;
 		bool mIsDisable = true;
 

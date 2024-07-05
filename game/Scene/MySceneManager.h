@@ -8,14 +8,13 @@ namespace MyProject
 	{
 	private:
 		std::shared_ptr<MyScene> mCurrentScene;
+		std::queue<std::shared_ptr<MyScene>> mQueueForWaiting;
 		
 	private:
 		void AddScene(std::shared_ptr<MyScene> _scene, SCENE_KEY _key);
 
 	public:
 		void SetCurrentScene(SCENE_KEY _key);
-		void ResetCurrentScene();
-		void ExcuteCurrentScene();
 
 		void Init();
 		void Update(const float _deltaTime);

@@ -15,7 +15,7 @@ namespace MyProject
 		size_t  mAnimationCount	= 0;
 		size_t	mAnimationIdx	= 0;
 		
-		bool mIsLoop = true;
+		bool	mIsLoop			= true;
 
 		MyResourceManager& mManager = MyResourceManager::GetInstance();
 

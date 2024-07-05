@@ -25,24 +25,24 @@ void MyTextButton::SetText(wstringV _text)
 
 void MyTextButton::SetScale()
 {
-	float fontSize	= mManager.mFont[L"BUTTON_FONT"]->GetFontSize();
-	float length	= static_cast<float>(mText.size()) * fontSize;
-	float length2 = length;
+	vec2 fontSize = mManager.mFont[L"BUTTON_FONT"]->GetTextSize(mText);
+	float width = fontSize.x;
+
 	vec2 mainLocation = mTransform.GetLocation();
 
-	length *= MyTransformer2D::GetCartesianSize().x / D3Device::GetInstance().GetViewportSize().x;
+	width *= MyTransformer2D::GetCartesianSize().x / D3Device::GetInstance().GetViewportSize().x;
 
-	mBtnLeftObj->SetLocation({mainLocation.x-length/2.f -8.f, mainLocation.y-0.5f});
-	mBtnRightObj->SetLocation({mainLocation.x+length/2.f + 8.f, mainLocation.y-0.5f});
+	mBtnLeftObj->SetLocation({mainLocation.x-width/2.f -8.f, mainLocation.y-0.5f});
+	mBtnRightObj->SetLocation({mainLocation.x+width/2.f + 8.f, mainLocation.y-0.5f});
 	
 	mainLocation = MyTransformer2D::CartesianToPixel(mainLocation);
 
 	mTextRect =
 	{
-		mainLocation.x - length2 / 2.f,
-		mainLocation.y - fontSize / 2.f,
-		mainLocation.x + length2 / 2.f,
-		mainLocation.y + fontSize / 2.f
+		mainLocation.x - fontSize.x * 0.5f,
+		mainLocation.y - fontSize.y * 0.5f,
+		mainLocation.x + fontSize.x * 0.5f,
+		mainLocation.y + fontSize.y * 0.5f
 	};
 }
 
@@ -57,7 +57,6 @@ void MyTextButton::Render()
 {
 	if (GetCurrentState() == SelectState::ACTIVE)
 	{
-		mManager.mShader[L"PixelShaderAlpha.hlsl"]->SetUpConfiguration();
 		mBtnLeftSprite.Render(mBtnLeftObj);
 		mManager.mMesh[mBtnLeftObj.GetMeshKey()]->Draw(mBtnLeftObj->GetModelMat());
 		mBtnRightSprite.Render(mBtnRightObj);

@@ -110,7 +110,12 @@ void MyWriterFont::DrawTexts(const wstringV _msg, RECT_F _rect, COLOR_F _color)
 	//mDevice.mD2dRT->DrawRectangle(rc, mDefaultColor.Get());
 	//mDevice.mD2dRT->DrawText(_msg.data(), _msg.size(), mWriteFont.Get(),&rc, mDefaultColor.Get());
 	//mDevice.mD2dRT->SetTransform(D2D1::Matrix3x2F::Rotation(-10.f));
-	mDevice.mD2dRT->DrawText(_msg.data(), _msg.size(), mTextFormat.Get(),&_rect, mBrush.Get());
+	mDevice.mD2dRT->DrawText(
+		_msg.data(),
+		static_cast<UINT32>(_msg.size()),
+		mTextFormat.Get(),
+		&_rect, mBrush.Get()
+	);
 	mDevice.mD2dRT->EndDraw();
 	DrawEnd();
 }
@@ -147,6 +152,25 @@ bool MyWriterFont::isBold() const
 float MyWriterFont::GetFontSize() const
 {
 	return mFontDesc.mFontSize;
+}
+
+vec2 MyWriterFont::GetTextSize(const wstringV _text) const
+{
+    ComPtr<IDWriteTextLayout> textLayout;
+	DWRITE_TEXT_METRICS textMetrics;
+
+    mWriteFactory->CreateTextLayout(
+        _text.data(),
+        static_cast<UINT32>(_text.size()),
+        mTextFormat.Get(),
+        FLT_MAX,  // Max width
+        FLT_MAX,  // Max height
+        textLayout.GetAddressOf()
+    );	
+
+	textLayout->GetMetrics(&textMetrics);
+
+	return { textMetrics.width, textMetrics.height };
 }
 
 MyTransformer2D* MyWriterFont::operator->()

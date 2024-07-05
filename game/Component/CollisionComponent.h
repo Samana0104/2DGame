@@ -11,16 +11,21 @@ namespace MyProject
 		RECT
 	};
 	
+	class MyActor;
+	using COLLISION_FUNC = std::function<void(RECT_F&, RECT_F&, MyActor&)>;
+
 	class CollisionComponent
 	{
 	private:
 		bool mIsCollisionable = true;
 
-		MyTransformer2D&    mTransform;
-		std::vector<RECT_F> mCollisionAreas;
+		MyActor& mObj;
+
+		std::vector<RECT_F>	 mCollisionAreas;
+		COLLISION_FUNC		 mCollisionFunc;
 
 	public:
-		CollisionComponent(MyTransformer2D& _transform);
+		CollisionComponent(MyActor & _obj);
 
 		void AddCollisionArea(const RECT_F _collsionArea);
 		// 나중에 여러 모양 충돌 구현할지도?
@@ -28,8 +33,12 @@ namespace MyProject
 		void ClearCollisionArea();
 
 		bool IsCollision(const RECT_F& _target);
-		bool IsCollisionable() const;
+		void IsCollisionWithEvent(MyActor & _targetObj);
 
+		bool IsCollisionable() const;
+		
+		void RegisterCollisionEvent(COLLISION_FUNC _func);
+		void ResizeCollisionArea();
 
 		static bool IsPointInRect(const RECT_F rt1, const vec2 pt);
 		static bool IsAABBCollision(const RECT_F& rt1, const RECT_F& rt2);

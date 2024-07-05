@@ -1,12 +1,18 @@
 #pragma once
 #include "MySceneManager.h"
 #include "MyTileManager.h"
+#include "MyTextButton.h"
 namespace MyProject
 {
 	class MySceneStage2 : public MyScene
 	{
 	private:
 		MyTileManager mTileMap;
+		MyTextButton mButtons[3];
+		MyObject mPauseBackground;
+
+		int mCurrentButton;
+		bool isPause = false;
 
 	public:
 		using MyScene::MyScene;

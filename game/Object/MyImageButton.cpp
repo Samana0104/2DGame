@@ -52,10 +52,8 @@ void MyImageButton::Render()
 
 	if (GetCurrentState() == SelectState::ACTIVE)
 	{
-		mManager.mShader[L"PixelShaderAlpha.hlsl"]->SetUpConfiguration();
 		mPointer.Render(mRenderSprite);
 		mManager.mMesh[mRenderSprite.GetMeshKey()]->Draw(mTransform.GetTransposMat() * mRenderSprite->GetModelMat());
-
 		mManager.mFont[L"BUTTON_FONT"]->DrawTexts(mText, rt, { 1.f, 1.f, 1.f, 1.f });
 	}
 }

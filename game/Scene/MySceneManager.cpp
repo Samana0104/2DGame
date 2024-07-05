@@ -15,17 +15,7 @@ void MySceneManager::AddScene(std::shared_ptr<MyScene> _scene, SCENE_KEY _key)
 }
 void MySceneManager::SetCurrentScene(SCENE_KEY _key)
 {
-	mCurrentScene = GetResource(_key);
-}
-
-void MySceneManager::ResetCurrentScene()
-{
-	mCurrentScene->Reset();
-}
-
-void MySceneManager::ExcuteCurrentScene()
-{
-	mCurrentScene->Execute();
+	mQueueForWaiting.push(GetResource(_key));
 }
 
 void MySceneManager::Init()
@@ -38,11 +28,18 @@ void MySceneManager::Init()
 	AddScene(std::make_shared<MySceneStage3>(*this), L"STAGE3");
 
 	SetCurrentScene(L"LOBBY");
-	ExcuteCurrentScene();
 }
 
 void MySceneManager::Update(const float _deltaTime)
 {
+	// 이거 없으면 현재 실행되고 있는 다 끝나기도 전에 바뀜
+	if (!mQueueForWaiting.empty()) 
+	{
+		mCurrentScene = mQueueForWaiting.front();
+		mCurrentScene->Execute();
+		mQueueForWaiting.pop();
+	}
+
 	mCurrentScene->Update(_deltaTime);
 }
 

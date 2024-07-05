@@ -5,12 +5,6 @@ using namespace MyProject;
 MyTileManager::MyTileManager():
 	mBackground(std::make_shared<MyTile>())
 {
-	mPosition = { 0.f, 0.f };
-	mSize = { 100.f, 100.f };
-	mRows = 0;
-	mColumns = 0;
-	mTileSize = { 0.f, 0.f };
-	mIsScriptLoaded = false;
 }
 
 bool MyTileManager::LoadScript(const wstringV _filePath)
@@ -79,7 +73,7 @@ bool MyTileManager::LoadScript(const wstringV _filePath)
 		tile->SetUVRect(mUV);
 		tile->SetTextureKey(buffer1);
 		tile->SetShaderKey(buffer2);
-		tile->GetCollsionComponent().SetCollisionable(static_cast<bool>(isCollision));
+		tile->GetCollisionComponent().SetCollisionable(static_cast<bool>(isCollision));
 		
 		mTiles.insert(std::make_pair(tileKey[0], tile));
 	}
@@ -101,14 +95,17 @@ bool MyTileManager::LoadScript(const wstringV _filePath)
 		{
 			if (mTiles.contains(converter[i]))
 			{
-				auto tile = std::make_unique<MyTile>();
+				auto tile = std::make_shared<MyTile>();
 				tile->SetTextureKey(mTiles[converter[i]]->GetTextureKey());
 				tile->SetUVRect(mTiles[converter[i]]->GetUVRect());
 				tile->SetShaderKey(mTiles[converter[i]]->GetShaderKey());
-				tile->GetCollsionComponent().SetCollisionable(
-					mTiles[converter[i]]->GetCollsionComponent().IsCollisionable());
+				tile->GetCollisionComponent().SetCollisionable(
+					mTiles[converter[i]]->GetCollisionComponent().IsCollisionable());
 				tile->SetRow(i);
 				tile->SetColumn(mColumns);
+
+				if (tile->GetCollisionComponent().IsCollisionable())
+					mCollisions.push_back(tile);
 				mTileMap.emplace_back(std::move(tile));
 			}
 		}
@@ -120,7 +117,7 @@ bool MyTileManager::LoadScript(const wstringV _filePath)
 
 	mIsScriptLoaded = true;
 
-	SetSize({ 160.f, 90.f });
+	SetSize({ 162.f, 92.f });
 	SetPosition({ 0.f, 0.f });
 	return true;
 }
@@ -159,18 +156,41 @@ void MyTileManager::SetSize(const vec2 _size)
 	for (auto& tile : mTileMap)
 	{
 		(*tile)->SetScale({ widthPerTile, heightPerTile });
+		tile->GetCollisionComponent().ResizeCollisionArea();
 	}
 
-	(*mBackground)->SetScale({ widthPerTile * 2, heightPerTile * 2 });
+	(*mBackground)->SetScale({ widthPerTile * 2.5f, heightPerTile * 2.5f });
 	mSize = _size;
 	mTileSize = { widthPerTile, heightPerTile };
 }
 
+void MyTileManager::Update(MyActor& _actor)
+{
+	for (auto& tile : mCollisions)
+	{
+		tile->GetCollisionComponent().IsCollisionWithEvent(_actor);
+	}
+}
+
 void MyTileManager::Render()
 {
+	// background size = 2 * tile size
+	for (float i = 0; i<mColumns+0.5f; i += 2.5f)
+	{
+		for (float j = 0; j < mRows+0.5f; j += 2.5f)
+		{
+			(*mBackground)->SetLocation(
+			{
+				j * mTileSize.x - mSize.x * 0.5f,
+				-i * mTileSize.y + mSize.y * 0.5f
+			});
+
+			mBackground->Render();
+		}
+	}
+
 	for (auto& tile : mTileMap)
 		tile->Render();
-
 }
 
 

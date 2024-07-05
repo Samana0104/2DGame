@@ -131,10 +131,20 @@ float MyTransformer2D::GetAngle() const
 RECT_F MyTransformer2D::GetCartesianRectF() const
 {
 	return {
-		mLocation.x - mScale.x / 2,
-		mLocation.y + mScale.y / 2,
-		mLocation.x + mScale.x / 2,
-		mLocation.y - mScale.y / 2
+		mLocation.x - mScale.x * 0.5f,
+		mLocation.y + mScale.y * 0.5f,
+		mLocation.x + mScale.x * 0.5f,
+		mLocation.y - mScale.y * 0.5f
+	};
+}
+
+RECT_F MyTransformer2D::GetCartesianScaleRectF() const
+{
+	return { 
+		-mScale.x * 0.5f, 
+		mScale.y * 0.5f, 
+		mScale.x * 0.5f,
+		-mScale.y * 0.5f 
 	};
 }
 
@@ -184,11 +194,18 @@ void MyTransformer2D::CalculateScaleRotationMat()
 	mTRSMat[1][1] = cos * mScale.y;
 }
 
-vec2 MyTransformer2D::CalculateScreenTRS(const vec2 _pos)
+vec2 MyTransformer2D::CalculateTRSAsVec(const vec2 _pos)
 {
 	const vec2 scaledVec = MyTransformer2D::ResizeScale(_pos, mScale);
 	const vec2 rotatedVec = MyTransformer2D::RotateAsAngle(scaledVec, mAngle);
 	return rotatedVec + mLocation;
+}
+
+RECT_F MyTransformer2D::CartesianToPixelRect(const RECT_F _rect)
+{
+	vec2 leftTop = CartesianToPixel({ _rect.left, _rect.top });
+	vec2 rightBottom = CartesianToPixel({ _rect.right, _rect.bottom });
+	return { leftTop.x, leftTop.y, rightBottom.x, rightBottom.y };
 }
 
 vec2 MyTransformer2D::CartesianToNDC(const vec2 _pos)

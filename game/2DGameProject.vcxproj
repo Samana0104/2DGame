@@ -200,7 +200,9 @@
     <ClInclude Include="Object\MyImageButton.h" />
     <ClInclude Include="Object\MyObject.h" />
     <ClInclude Include="Object\MyPawn.h" />
+    <ClInclude Include="Object\MyPlayer.h" />
     <ClInclude Include="Object\MyTextButton.h" />
+    <ClInclude Include="Object\ObjectCode.h" />
     <ClInclude Include="Scene\MyScene.h" />
     <ClInclude Include="Scene\MySceneLobby.h" />
     <ClInclude Include="Scene\MySceneManager.h" />
@@ -254,6 +256,7 @@
     <ClCompile Include="Object\MyImageButton.cpp" />
     <ClCompile Include="Object\MyObject.cpp" />
     <ClCompile Include="Object\MyPawn.cpp" />
+    <ClCompile Include="Object\MyPlayer.cpp" />
     <ClCompile Include="Object\MyTextButton.cpp" />
     <ClCompile Include="Scene\MySceneLobby.cpp" />
     <ClCompile Include="Scene\MySceneManager.cpp" />
@@ -280,6 +283,8 @@
     <ClCompile Include="Timer\MyTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\data\Shaders\BackgroundMap.hlsl" />
+    <FxCompile Include="..\data\Shaders\BackgroundPause.hlsl" />
     <FxCompile Include="..\data\shaders\PixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PSMain</EntryPointName>

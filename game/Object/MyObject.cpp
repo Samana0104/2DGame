@@ -2,14 +2,6 @@
 #include "MyObject.h"
 using namespace MyProject;
 
-MyObject::MyObject() :
-	mTextureKey(L"Default.jpg"), 
-	mMeshKey(L"DEFAULT_MESH"),
-	mShaderKey(L"PixelShader.hlsl"),
-	mColor({ 1.f, 1.f, 1.f, 1.f })
-{
-}
-
 void MyObject::SetImageScale()
 {
 	vec2 windowSize = MyWindow::GetInstance().GetWindowSizeVec2();
@@ -19,24 +11,29 @@ void MyObject::SetImageScale()
 	mTransform.SetScale((imageSize/windowSize) * cartesianSize);
 }
 
-void MyObject::SetColor(vec4 _color)
+void MyObject::SetColor(const vec4 _color)
 {
 	mColor = _color;
 }
 
-void MyObject::SetTextureKey(TEXTURE_KEY _key)
+void MyObject::SetTextureKey(const TEXTURE_KEY _key)
 {
 	mTextureKey = _key;
 }
 
-void MyObject::SetMeshKey(MESH_KEY _key)
+void MyObject::SetMeshKey(const MESH_KEY _key)
 {
 	mMeshKey = _key;
 }
 
-void MyObject::SetShaderKey(SHADER_KEY _key)
+void MyObject::SetShaderKey(const SHADER_KEY _key)
 {
 	mShaderKey = _key;
+}
+
+void MyObject::SetObjectCode(const ObjectCode _objCode)
+{
+	mObjectCode = _objCode;
 }
 
 
@@ -58,6 +55,11 @@ const TEXTURE_KEY& MyObject::GetTextureKey() const
 const SHADER_KEY& MyObject::GetShaderKey() const
 {
 	return mShaderKey;
+}
+
+const ObjectCode& MyObject::GetObjectCode() const
+{
+	return mObjectCode;
 }
 
 MyTransformer2D& MyObject::GetTransform() 

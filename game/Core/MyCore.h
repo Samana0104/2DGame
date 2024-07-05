@@ -11,9 +11,9 @@ namespace MyProject
 	class MyCore : public MyCoreAPI
 	{
 	protected:
-		MySceneManager mSceneManager;
-		MySystemTimer mTimer;
-		MyObject mWideScreen;
+		MySceneManager	mSceneManager;
+		MySystemTimer	mTimer;
+		MyObject		mWideScreen;
 
 		MyInput&			mInput = MyInput::GetInstance();
 		MyWindow&			mWindow = MyWindow::GetInstance();

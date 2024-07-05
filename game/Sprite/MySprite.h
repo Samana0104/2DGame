@@ -21,6 +21,7 @@ namespace MyProject
 
 		SpriteType  mSpriteType;
 		TEXTURE_KEY	mSpriteMainKey;
+		SHADER_KEY  mSpriteShaderKey;
 
 		int	mSpriteCount;
 

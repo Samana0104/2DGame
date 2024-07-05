@@ -1,5 +1,4 @@
 #pragma once
-#include "MyCoreAPI.h"
 
 namespace MyProject
 {

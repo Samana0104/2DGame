@@ -31,7 +31,10 @@ PS_Out PSMain( PS_In psIn )
     float r = sqrt(pow(psIn.v.x, 2) + pow(psIn.v.y, 2));
 	
 //	float theta = 
-    psOut.c = psIn.c * r;
+    float smooth = smoothstep(0.3f, 1.0f, 1 - r);
+    psOut.c = psIn.c * smooth;
 
+    if (r < 0.2f)
+        psOut.c *= 0.98f;
     return psOut;
 }

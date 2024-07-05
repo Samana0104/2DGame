@@ -37,8 +37,9 @@ namespace MyProject
 		std::map<CALLBACK_ID, ONMOUSEUP_FUNC> mCallbackOnMouseUP;
 
 		KeyState	mCurrentKeyState[KEY_COUNT];
-		POINT_L		mMousePos;
-		POINT_L		mPreMousePos;
+
+		POINT_L		mMousePos	 = { 0, 0 };
+		POINT_L		mPreMousePos = { 0, 0 };
 
 	protected:
 		MyWindow& mWindow = MyWindow::GetInstance();

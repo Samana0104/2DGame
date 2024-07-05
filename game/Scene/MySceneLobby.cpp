@@ -22,7 +22,6 @@ void MySceneLobby::Init()
 
 void MySceneLobby::Update(float _deltaTime)
 {
-	mManager.mSound[L"theme.ogg"]->Update();
 	if (mInput.GetCurrentKeyState(VK_UP) == KeyState::KEY_DOWN)
 	{
 		mManager.mSound[L"menu-change.wav"]->Play();

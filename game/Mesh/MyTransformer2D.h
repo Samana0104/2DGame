@@ -15,7 +15,6 @@ namespace MyProject
 
 	private:
 		void CalculateScaleRotationMat();
-		vec2 CalculateScreenTRS(const vec2 _pos);
 		
 	public:
 		MyTransformer2D();
@@ -31,6 +30,9 @@ namespace MyProject
 
 		void MultiplyToTRSMat(const mat3& _mat);
 
+		//벡터로 계산하고 맵핑된 벡터 반환
+		vec2 CalculateTRSAsVec(const vec2 _pos);
+
 		const mat3& GetModelMat() const;
 		const mat3	GetViewMat() const;
 		const mat3  GetTransposMat() const;
@@ -41,8 +43,9 @@ namespace MyProject
 		const vec2&	GetScale() const;
 		float		GetAngle() const;
 
-		// 이건 스케일 박스 구함
+		// 위치 기준 플레이어 rect
 		RECT_F		GetCartesianRectF() const;
+		RECT_F		GetCartesianScaleRectF() const;
 		RECT_F		GetPixelRectF() const;
 
 		MyTransformer2D* operator->();
@@ -51,6 +54,7 @@ namespace MyProject
 		static void		SetCartesianSize(const vec2 _pos);
 		static vec2		GetCartesianSize();
 
+		static RECT_F	CartesianToPixelRect(const RECT_F _rect);
 		static vec2		CartesianToNDC(const vec2 _pos);
 		static vec2		CartesianToPixel(const vec2 _pos);
 		static vec2		CartesianToPolar(const vec2 _pos);

@@ -2,20 +2,6 @@
 #include "MyTile.h"
 using namespace MyProject;
 
-MyTile::MyTile() :
-	mCollision(mTransform),
-	mUV({})
-{
-	mCollision.AddCollisionArea(mTransform.GetCartesianRectF());
-	mRow = 0;
-	mColumn = 0;
-}
-
-CollisionComponent& MyTile::GetCollsionComponent()
-{
-	return mCollision;
-}
-
 void MyTile::SetUVRect(const RECT_F _uv)
 {
 	mUV = _uv;
@@ -44,6 +30,17 @@ int MyTile::GetColumn() const
 const RECT_F& MyTile::GetUVRect() const
 {
 	return mUV;
+}
+
+void MyTile::OnCollision(RECT_F& _self, RECT_F& _target, MyActor& _targetObj)
+{
+	// 고정형 블럭
+	return;
+}
+
+void MyTile::Update(const float _deltaTime)
+{
+	
 }
 
 void MyTile::Render()

@@ -24,12 +24,10 @@ namespace MyProject
 		ComPtr<IDWriteTextFormat>		mTextFormat;
 		ComPtr<ID2D1SolidColorBrush>	mBrush;
 
-		FontDesc		mFontDesc;
-		MyTransformer2D mTransform;
-
+		FontDesc		  mFontDesc;
+		MyTransformer2D	  mTransform;
 		D2D1_MATRIX_3X2_F mTempMat;
-
-		CALLBACK_ID mWMSizeID;
+		CALLBACK_ID		  mWMSizeID;
 
 	private:
 		void	DrawBegin();
@@ -52,6 +50,7 @@ namespace MyProject
 		bool isBold() const;
 
 		float GetFontSize() const;
+		vec2  GetTextSize(const wstringV _text) const;
 
 		MyTransformer2D* operator->();
 	};

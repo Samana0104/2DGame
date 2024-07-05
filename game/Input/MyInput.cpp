@@ -5,8 +5,6 @@ using namespace MyProject;
 MyInput::MyInput()
 {
 	ZeroMemory(&mCurrentKeyState, sizeof(KeyState) * 256);
-	mMousePos = { 0, 0 };
-	mPreMousePos = { 0, 0 };
 }
 
 void MyInput::UpdateKeyState(const UINT _key)
