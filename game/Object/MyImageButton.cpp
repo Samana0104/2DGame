@@ -33,6 +33,7 @@ void MyImageButton::Update(const float _deltaTime)
 
 void MyImageButton::Render()
 {
+	vec2 viewportSize = D3Device::GetInstance().GetViewportSize();
 	vec2 windowSize = MyWindow::GetInstance().GetWindowSizeVec2();
 	float fontSize = mManager.mFont[L"BUTTON_FONT"]->GetFontSize();
 	float length = mText.size() * fontSize;
@@ -40,9 +41,9 @@ void MyImageButton::Render()
 	RECT_F rt =
 	{
 		windowSize.x*0.5f - length * 0.5f,
-		windowSize.y*0.95f - fontSize * 0.5f,
+		windowSize.y*0.5f + viewportSize.y*0.43f - fontSize * 0.5f,
 		windowSize.x*0.5f + length * 0.5f,
-		windowSize.y*0.95f + fontSize * 0.5f,
+		windowSize.y*0.5f + viewportSize.y*0.43f + fontSize * 0.5f,
 	};
 
 	mManager.mShader[L"PixelShaderLight.hlsl"]->SetUpConfiguration();

@@ -12,6 +12,7 @@ struct PS_In
 	float4 p : SV_POSITION;// ¹Ýµå½Ã float4
 	float4 c  :COLOR;
 	float2 t  :TEXCOORD0;
+    float2 v : VPOS;
 };
 
 struct PS_Out
@@ -27,11 +28,10 @@ PS_Out PSMain( PS_In psIn )
 	//return { mCartesianSize.x * _pos.x / windowSize.x - mCartesianSize.x / 2,
 	//		-mCartesianSize.y * _pos.y / windowSize.y + mCartesianSize.y / 2 };
 
-    float length = sqrt(pow(psIn.p.x, 2) + pow(psIn.p.y, 2));
-    if (length <= 200.f)
-    {
-        psOut.c = psIn.c * pixel;
-    }
+    float r = sqrt(pow(psIn.v.x, 2) + pow(psIn.v.y, 2));
+	
+//	float theta = 
+    psOut.c = psIn.c * r;
 
     return psOut;
 }

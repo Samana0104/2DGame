@@ -198,9 +198,13 @@ vec2 MyTransformer2D::CartesianToNDC(const vec2 _pos)
 
 vec2 MyTransformer2D::CartesianToPixel(const vec2 _pos)
 {
-	const vec2 windowSize = MyWindow::GetInstance().GetWindowSizeVec2();
-	return { _pos.x * windowSize.x / mCartesianSize.x + 0.5f * windowSize.x,
-			-_pos.y * windowSize.y / mCartesianSize.y + 0.5f * windowSize.y };
+	float leftTopX = D3Device::GetInstance().mViewPort.TopLeftX;
+	float leftTopY = D3Device::GetInstance().mViewPort.TopLeftY;
+
+	const vec2 viewportSize = D3Device::GetInstance().GetViewportSize();
+
+	return { leftTopX + _pos.x * viewportSize.x / mCartesianSize.x + 0.5f * viewportSize.x,
+			leftTopY - _pos.y * viewportSize.y / mCartesianSize.y + 0.5f * viewportSize.y };
 }
 
 vec2 MyTransformer2D::PixelToCartesian(const vec2 _pos)
@@ -214,9 +218,14 @@ vec2 MyTransformer2D::PixelToCartesian(const vec2 _pos)
 	     0			  cartesian/window(y)	-cartesian/2(y)
 		 0						0				1	
 	*/
+	float leftTopX = D3Device::GetInstance().mViewPort.TopLeftX;
+	float leftTopY = D3Device::GetInstance().mViewPort.TopLeftY;
+
+	const vec2 viewportSize = D3Device::GetInstance().GetViewportSize();
+
 	const vec2 windowSize = MyWindow::GetInstance().GetWindowSizeVec2();
-	return { mCartesianSize.x * _pos.x / windowSize.x - mCartesianSize.x / 2,
-			-mCartesianSize.y * _pos.y / windowSize.y + mCartesianSize.y / 2 };
+	return { leftTopX + viewportSize.x * _pos.x / windowSize.x - viewportSize.x / 2,
+			 leftTopY -viewportSize.y * _pos.y / windowSize.y + viewportSize.y / 2 };
 }
 
 vec2 MyTransformer2D::PixelToNDC(const vec2 _pos, const vec2 _rectSize)

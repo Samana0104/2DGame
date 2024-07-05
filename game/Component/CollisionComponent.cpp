@@ -2,6 +2,54 @@
 #include "CollisionComponent.h"
 using namespace MyProject;
 
+CollisionComponent::CollisionComponent(MyTransformer2D& _transform)
+    : mTransform(_transform)
+{
+    mCollisionAreas.reserve(5);
+}
+
+void CollisionComponent::AddCollisionArea(const RECT_F _collisionArea)
+{
+    mCollisionAreas.push_back(_collisionArea);
+}
+
+void CollisionComponent::SetCollisionable(bool _isCollisionable)
+{
+    mIsCollisionable = _isCollisionable;
+}
+
+void CollisionComponent::ClearCollisionArea()
+{
+    mCollisionAreas.clear();
+}
+
+bool CollisionComponent::IsCollision(const RECT_F& _target)
+{
+    RECT_F transformRect = mTransform.GetCartesianRectF();
+    RECT_F collisionRect;
+    
+    for (auto& collisionArea : mCollisionAreas)
+    {
+        collisionRect =
+        {
+            collisionArea.left + transformRect.left,
+            collisionArea.top + transformRect.top,
+            collisionArea.right + transformRect.right,
+            collisionArea.bottom + transformRect.bottom
+        };
+
+        if (IsAABBCollision(collisionRect, _target))
+            return true;
+    }
+
+    return false;
+}
+
+bool CollisionComponent::IsCollisionable() const
+{
+    return mIsCollisionable;
+}
+
 bool CollisionComponent::IsPointInRect(const RECT_F rt1, const vec2 pt)
 {
 	if (rt1.left <= pt.x && rt1.right >= pt.x)
@@ -14,7 +62,7 @@ bool CollisionComponent::IsPointInRect(const RECT_F rt1, const vec2 pt)
 	return false;
 }
 
-bool CollisionComponent::IsAABBCollision(const RECT_F rt1, const RECT_F rt2)
+bool CollisionComponent::IsAABBCollision(const RECT_F& rt1, const RECT_F& rt2)
 {
 	float minX, maxX, minY, maxY;
 	minX = min(rt1.left, rt2.left);

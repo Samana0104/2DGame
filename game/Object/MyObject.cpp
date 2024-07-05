@@ -45,7 +45,7 @@ const vec4& MyObject::GetColor() const
 	return mColor;
 }
 
-const MESH_KEY& MyProject::MyObject::GetMeshKey() const
+const MESH_KEY& MyObject::GetMeshKey() const
 {
 	return mMeshKey;
 }

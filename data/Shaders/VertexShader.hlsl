@@ -2,7 +2,7 @@
 // Ω√∏‡∆Ω(¿«πÃ±∏¡∂) : SV_POSITION, POSITION) 
 struct VS_In
 {
-	float2 p : POS;
+	float2 p : POSITION;
 	float4 c : COLOR;
 	float2 t : TEX;
 };
@@ -12,6 +12,7 @@ struct VS_Out
 	float4 p : SV_POSITION;// π›µÂΩ√ float4
 	float4 c  :COLOR0;//COLOR1;
 	float2 t  :TEXCOORD0; // ~ TEXCOORD15
+    float2 v : VPOS;
 };
 
 VS_Out VSMain( VS_In vsIn) 
@@ -20,6 +21,7 @@ VS_Out VSMain( VS_In vsIn)
     vsOut.p = float4(vsIn.p.x, vsIn.p.y, 0, 1);
     vsOut.c = vsIn.c;
     vsOut.t = vsIn.t;
+    vsOut.v.xy = vsIn.p.xy;
     return vsOut;
 }
 /*float4 VSMain( float2 p : POS, float4 c:COLOR) : SV_POSITION

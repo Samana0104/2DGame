@@ -50,12 +50,23 @@ void MySceneStage::Update(float _deltaTime)
 	{
 		if (mCurrentButton == 0)
 		{
-			mManager.mSound[L"chest-exit.wav"]->Play();
+			mManager.mSound[L"chest-enter.wav"]->Play();
 			mSceneManager.SetCurrentScene(L"LOBBY");
 		}
-		else if(mCurrentButton != 0)
+		else if (mCurrentButton == 1)
 		{
 			mManager.mSound[L"chest-enter.wav"]->Play();
+			mSceneManager.SetCurrentScene(L"STAGE1");
+		}
+		else if(mCurrentButton == 2)
+		{
+			mManager.mSound[L"chest-enter.wav"]->Play();
+			mSceneManager.SetCurrentScene(L"STAGE2");
+		}
+		else if(mCurrentButton == 3)
+		{
+			mManager.mSound[L"chest-enter.wav"]->Play();
+			mSceneManager.SetCurrentScene(L"STAGE3");
 		}
 	}
 

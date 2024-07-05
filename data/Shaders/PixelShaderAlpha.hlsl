@@ -12,6 +12,7 @@ struct PS_In
 	float4 p : SV_POSITION;// ¹Ýµå½Ã float4
 	float4 c  :COLOR;
 	float2 t  :TEXCOORD0;
+    float2 v : VPOS;
 };
 
 struct PS_Out

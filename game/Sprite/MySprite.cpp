@@ -26,7 +26,7 @@ const SpriteType& MySprite::GetSpriteType() const
 	return mSpriteType;
 }
 
-bool MySprite::LoadSpriteScriptFile(wstringV _filePath)
+bool MySprite::LoadScript(wstringV _filePath)
 {
 	FILE* fp_src = nullptr;
 

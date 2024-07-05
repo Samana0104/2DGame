@@ -30,21 +30,19 @@ void MyTextButton::SetScale()
 	float length2 = length;
 	vec2 mainLocation = mTransform.GetLocation();
 
-	length *= MyTransformer2D::GetCartesianSize().x / MyWindow::GetInstance().GetWindowSizeF().x;
+	length *= MyTransformer2D::GetCartesianSize().x / D3Device::GetInstance().GetViewportSize().x;
 
 	mBtnLeftObj->SetLocation({mainLocation.x-length/2.f -8.f, mainLocation.y-0.5f});
 	mBtnRightObj->SetLocation({mainLocation.x+length/2.f + 8.f, mainLocation.y-0.5f});
 	
 	mainLocation = MyTransformer2D::CartesianToPixel(mainLocation);
 
-	//mTransform.SetScale({ 100.f, 100.f });
-	//mTextRect = { MyTransformer2D::}
 	mTextRect =
 	{
-		mainLocation.x - length2 / 2,
-		mainLocation.y - fontSize / 2,
-		mainLocation.x + length2 / 2,
-		mainLocation.y + fontSize / 2
+		mainLocation.x - length2 / 2.f,
+		mainLocation.y - fontSize / 2.f,
+		mainLocation.x + length2 / 2.f,
+		mainLocation.y + fontSize / 2.f
 	};
 }
 

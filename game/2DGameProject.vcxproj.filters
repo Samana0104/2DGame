@@ -52,6 +52,9 @@
     <Filter Include="Engine\FSM">
       <UniqueIdentifier>{e4353116-282f-4af4-827b-22a80f4b8971}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Tile">
+      <UniqueIdentifier>{bc6f2f1c-dceb-447e-ba45-653b10e93584}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Font\MyFontHandler.h">
@@ -201,6 +204,21 @@
     <ClInclude Include="Object\MyImageButton.h">
       <Filter>Engine\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\MySceneStage1.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile\MyTile.h">
+      <Filter>Engine\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile\MyTileManager.h">
+      <Filter>Engine\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MySceneStage2.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MySceneStage3.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font\MyFontHandler.cpp">
@@ -331,6 +349,21 @@
     </ClCompile>
     <ClCompile Include="Object\MyImageButton.cpp">
       <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MySceneStage1.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile\MyTileManager.cpp">
+      <Filter>Engine\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile\MyTile.cpp">
+      <Filter>Engine\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MySceneStage2.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MySceneStage3.cpp">
+      <Filter>Engine\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

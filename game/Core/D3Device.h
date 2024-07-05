@@ -48,6 +48,8 @@ namespace MyProject
 
 		void SetViewportSizeOnCenter(glm::vec2 _size);
 		void SetViewportSizeOnLeftTop(glm::vec2 _size);
+		
+		glm::vec2 GetViewportSize() const;
 		bool CreateDevice();
 	};
 

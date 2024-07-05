@@ -7,6 +7,11 @@ D3Device::~D3Device()
 	MyWindow::GetInstance().DeleteCallBack(mWMSizeID);
 }
 
+glm::vec2 D3Device::GetViewportSize() const
+{
+	return { mViewPort.Width, mViewPort.Height };
+}
+
 bool D3Device::CreateDevice()
 {
 	if (!CreateDeviceAndSwapChain())

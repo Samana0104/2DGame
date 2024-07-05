@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -125,7 +125,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Color\;$(ProjectDir)Component\;$(ProjectDir)Core\;$(ProjectDir)fmod\inc\;$(ProjectDir)Font\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Mesh\;$(ProjectDir)Object\;$(ProjectDir)Shader\;$(ProjectDir)Sound\;$(ProjectDir)Sprite\;$(ProjectDir)Scene\;$(ProjectDir)Texture\;$(ProjectDir)Timer\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Color\;$(ProjectDir)Component\;$(ProjectDir)Core\;$(ProjectDir)fmod\inc\;$(ProjectDir)Font\;$(ProjectDir)FSM\;$(ProjectDir)GameStart\;$(ProjectDir)Input\;$(ProjectDir)Mesh\;$(ProjectDir)Object\;$(ProjectDir)Shader\;$(ProjectDir)Sound\;$(ProjectDir)Sprite\;$(ProjectDir)Scene\;$(ProjectDir)Texture\;$(ProjectDir)Tile\;$(ProjectDir)Timer\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -206,6 +206,9 @@
     <ClInclude Include="Scene\MySceneManager.h" />
     <ClInclude Include="Scene\MySceneSetting.h" />
     <ClInclude Include="Scene\MySceneStage.h" />
+    <ClInclude Include="Scene\MySceneStage1.h" />
+    <ClInclude Include="Scene\MySceneStage2.h" />
+    <ClInclude Include="Scene\MySceneStage3.h" />
     <ClInclude Include="Shader\MyPixelShader.h" />
     <ClInclude Include="Shader\MyShader.h" />
     <ClInclude Include="Shader\MyShaderHandler.h" />
@@ -217,6 +220,8 @@
     <ClInclude Include="Sprite\MySpriteHandler.h" />
     <ClInclude Include="Texture\MyTexture.h" />
     <ClInclude Include="Texture\MyTextureHandler.h" />
+    <ClInclude Include="Tile\MyTile.h" />
+    <ClInclude Include="Tile\MyTileManager.h" />
     <ClInclude Include="Timer\MyNormalTimer.h" />
     <ClInclude Include="Timer\MySystemTimer.h" />
     <ClInclude Include="Timer\MyTimer.h" />
@@ -254,6 +259,9 @@
     <ClCompile Include="Scene\MySceneManager.cpp" />
     <ClCompile Include="Scene\MySceneSetting.cpp" />
     <ClCompile Include="Scene\MySceneStage.cpp" />
+    <ClCompile Include="Scene\MySceneStage1.cpp" />
+    <ClCompile Include="Scene\MySceneStage2.cpp" />
+    <ClCompile Include="Scene\MySceneStage3.cpp" />
     <ClCompile Include="Shader\MyPixelShader.cpp" />
     <ClCompile Include="Shader\MyShader.cpp" />
     <ClCompile Include="Shader\MyShaderHandler.cpp" />
@@ -265,6 +273,8 @@
     <ClCompile Include="Sprite\MySpriteHandler.cpp" />
     <ClCompile Include="Texture\MyTexture.cpp" />
     <ClCompile Include="Texture\MyTextureHandler.cpp" />
+    <ClCompile Include="Tile\MyTile.cpp" />
+    <ClCompile Include="Tile\MyTileManager.cpp" />
     <ClCompile Include="Timer\MyNormalTimer.cpp" />
     <ClCompile Include="Timer\MySystemTimer.cpp" />
     <ClCompile Include="Timer\MyTimer.cpp" />
