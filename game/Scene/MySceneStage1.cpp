@@ -9,7 +9,6 @@ void MySceneStage1::Init()
 	mPauseBackground.SetColor({ 0.f, 0.f, 0.f, 1.f });
 	mPauseBackground->SetScale({ 160.f, 90.f });
 	mPauseBackground.SetShaderKey(L"BackgroundPause.hlsl");
-
 	mButtons[0]->SetLocation({ 0.f, 11.f });
 	mButtons[1]->SetLocation({ 0.f, 0.f });
 	mButtons[2]->SetLocation({ 0.f, -11.f });
@@ -72,6 +71,7 @@ void MySceneStage1::Update(float _deltaTime)
 			}
 			else if (mCurrentButton == 1)
 			{
+				Reset();
 			}
 			else if (mCurrentButton == 2)
 			{
@@ -81,27 +81,25 @@ void MySceneStage1::Update(float _deltaTime)
 		}
 	}
 
+
+	mObjManager.Update(_deltaTime);
+
 	for (int i = 0; i < 3; i++)
 		mButtons[i].Update(_deltaTime);
-
-	mPlayer.Update(_deltaTime);
 }
 
 void MySceneStage1::Render()
 {
-	mTileMap.Render();
-
+	mObjManager.Render();
 	if (isPause)
 	{
 		mPauseBackground.Render();
 		for (int i = 0; i < 3; i++)
 			mButtons[i].Render();
 	}
-	mPlayer.Render();
 	mManager.mFont.DrawTextForDebugging(L"%f %f",
-		mPlayer->GetLocation().x,
-		mPlayer->GetLocation().y);
-	mTileMap.Update(mPlayer);
+		MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).x,
+		MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).y);
 }
 
 void MySceneStage1::Release()
@@ -110,8 +108,28 @@ void MySceneStage1::Release()
 
 void MySceneStage1::Reset()
 {
+	mObjManager.ClearObject();
+	Start();
 }
 
-void MySceneStage1::Execute()
+void MySceneStage1::Start()
 {
+	auto woodBox1 = std::make_shared<MyWoodBox>();
+	auto woodBox2 = std::make_shared<MyWoodBox>();
+	auto woodBox3 = std::make_shared<MyWoodBox>();
+	auto player  = std::make_shared<MyPlayer>();
+
+	(*player)->SetLocation({ 0.f, 0.f });
+	(*woodBox1)->SetLocation({ 12.f, -10.f });
+	(*woodBox2)->SetLocation({ 14.f, 0.f });
+
+	mButtons[mCurrentButton].SetCurrentState(SelectState::DEFAULT);
+	mCurrentButton = 0;
+	mButtons[mCurrentButton].SetCurrentState(SelectState::ACTIVE);
+	isPause = false;
+
+	mObjManager.SetTileManager(&mTileMap);
+	mObjManager.AddObject(player);
+	mObjManager.AddObject(woodBox1);
+	mObjManager.AddObject(woodBox2);
 }

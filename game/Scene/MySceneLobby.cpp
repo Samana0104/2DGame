@@ -81,8 +81,12 @@ void MySceneLobby::Reset()
 {
 }
 
-void MySceneLobby::Execute()
+void MySceneLobby::Start()
 {
 	mManager.mSound[L"theme.ogg"]->InitSound();
 	mManager.mSound[L"theme.ogg"]->Play(true);
+}
+
+void MySceneLobby::End()
+{
 }

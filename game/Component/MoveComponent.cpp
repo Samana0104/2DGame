@@ -7,54 +7,86 @@ MoveComponent::MoveComponent(MyTransformer2D & _transform) :
 {
 }
 
-void MoveComponent::SetSpeed(const vec2 _speed)
+void MoveComponent::SetSpeedX(const float _speedX)
 {
-    mSpeed = _speed;
+    mVelocity.x = _speedX;
 }
 
-void MoveComponent::SetAcceleration(const vec2 _acceleration)
+void MoveComponent::SetSpeedY(const float _speedY)
 {
-    mAcceleration = _acceleration;
+    mVelocity.y = _speedY;
 }
 
-void MoveComponent::AddSpeed(const vec2 _speed)
+void MoveComponent::SetAccelX(const float _acclerationX)
 {
-    mSpeed += _speed;
+    mAcceleration.x = _acclerationX;
 }
 
-void MoveComponent::AddAcceleration(const vec2 _acceleration)
+void MoveComponent::SetAccelY(const float _acclerationY)
 {
-    mAcceleration += _acceleration;
+    mAcceleration.y = _acclerationY;
+}
+
+const vec2& MoveComponent::GetOffset() const
+{
+    return mOffset;
+}
+
+void MoveComponent::AddSpeedX(const float _speed)
+{
+    mVelocity.x += _speed;
+}
+
+void MoveComponent::AddSpeedY(const float _speed)
+{
+    mVelocity.y += _speed;
+}
+
+void MoveComponent::AddAccelX(const float _acceleration)
+{
+    mAcceleration.x += _acceleration;
+}
+
+void MoveComponent::AddAccelY(const float _acceleration)
+{
+    mAcceleration.y += _acceleration;
 }
 
 void MoveComponent::Break(const vec2 _accleration)
 {
-    if (mSpeed.x <= TOLERANCE && mSpeed.y <= TOLERANCE)
+    if (mVelocity.x <= TOLERANCE && mVelocity.y <= TOLERANCE)
         return;
 
-    if (mSpeed.x > 0.f)
+    if (mVelocity.x > 0.f)
     {
 		mIsXposBreaking = true;
     }
-    else if(mSpeed.x < 0.f)
+    else if(mVelocity.x < 0.f)
     {
 		mIsXposBreaking = false;
     }
 
 }
 
-vec2 MoveComponent::GetSpeed() const
+void MoveComponent::Stop()
 {
-    return mSpeed;
+    mVelocity = { 0.f, 0.f };
+    mAcceleration = { 0.f, 0.f };
 }
 
-vec2 MoveComponent::GetAcceleration() const
+vec2 MoveComponent::GetVelocity() const
+{
+    return mVelocity;
+}
+
+vec2 MoveComponent::GetAccel() const
 {
     return mAcceleration;
 }
 
 void MoveComponent::Update(float _deltaTime)
 {
-    mSpeed += mAcceleration * _deltaTime;
-    mTransform->AddLocation(mSpeed * _deltaTime);
+    mVelocity += mAcceleration * _deltaTime;
+    mOffset = mVelocity * _deltaTime;
+    mTransform->AddLocation(mOffset);
 }

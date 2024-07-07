@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -199,9 +199,11 @@
     <ClInclude Include="Object\MyCamera.h" />
     <ClInclude Include="Object\MyImageButton.h" />
     <ClInclude Include="Object\MyObject.h" />
+    <ClInclude Include="Object\MyObjectManager.h" />
     <ClInclude Include="Object\MyPawn.h" />
     <ClInclude Include="Object\MyPlayer.h" />
     <ClInclude Include="Object\MyTextButton.h" />
+    <ClInclude Include="Object\MyWoodBox.h" />
     <ClInclude Include="Object\ObjectCode.h" />
     <ClInclude Include="Scene\MyScene.h" />
     <ClInclude Include="Scene\MySceneLobby.h" />
@@ -255,9 +257,11 @@
     <ClCompile Include="Object\MyCamera.cpp" />
     <ClCompile Include="Object\MyImageButton.cpp" />
     <ClCompile Include="Object\MyObject.cpp" />
+    <ClCompile Include="Object\MyObjectManager.cpp" />
     <ClCompile Include="Object\MyPawn.cpp" />
     <ClCompile Include="Object\MyPlayer.cpp" />
     <ClCompile Include="Object\MyTextButton.cpp" />
+    <ClCompile Include="Object\MyWoodBox.cpp" />
     <ClCompile Include="Scene\MySceneLobby.cpp" />
     <ClCompile Include="Scene\MySceneManager.cpp" />
     <ClCompile Include="Scene\MySceneSetting.cpp" />

@@ -28,6 +28,9 @@ PS_Out PSMain( PS_In psIn )
     if (pixel.r == 1.f && pixel.g == 0.f && pixel.b == 1.f)
         discard;
 	
+    if (pixel.r == 0.f && pixel.g == 1.f && pixel.b == 1.f)
+        discard;
+
     psOut.c = pixel * psIn.c;
 	//psOut.c = pixel;
  

@@ -4,7 +4,7 @@
 #include "MyWindow.h"
 #include "MyResourceManger.h"
 #include "MySceneManager.h"
-#include "MyObject.h"
+#include "MyObjectManager.h"
 
 namespace MyProject
 {

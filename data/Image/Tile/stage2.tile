@@ -1,5 +1,5 @@
 #background <RECT, 사진, 쉐이더 >
-0 40 39 79 checker.png BackgroundMap.hlsl
+0 80 39 119 checker.png BackgroundMap.hlsl
 #block < 첫째 줄 수 > < 두번째 줄 키, 충돌여부, RECT, 사진, 쉐이더 >
 14
 1 1 32 32 47 47 cave.png PixelShaderAlpha.hlsl

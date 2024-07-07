@@ -225,6 +225,12 @@
     <ClInclude Include="Object\MyPlayer.h">
       <Filter>Engine\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Object\MyWoodBox.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MyObjectManager.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font\MyFontHandler.cpp">
@@ -372,6 +378,12 @@
       <Filter>Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Object\MyPlayer.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyWoodBox.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyObjectManager.cpp">
       <Filter>Engine\Object</Filter>
     </ClCompile>
   </ItemGroup>

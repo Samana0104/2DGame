@@ -31,6 +31,11 @@ void MyObject::SetShaderKey(const SHADER_KEY _key)
 	mShaderKey = _key;
 }
 
+void MyObject::SetObjectID(const OBJECT_ID _objID)
+{
+	mObjectID = _objID;
+}
+
 void MyObject::SetObjectCode(const ObjectCode _objCode)
 {
 	mObjectCode = _objCode;
@@ -60,6 +65,11 @@ const SHADER_KEY& MyObject::GetShaderKey() const
 const ObjectCode& MyObject::GetObjectCode() const
 {
 	return mObjectCode;
+}
+
+const OBJECT_ID& MyObject::GetObjectID() const
+{
+	return mObjectID;
 }
 
 MyTransformer2D& MyObject::GetTransform() 

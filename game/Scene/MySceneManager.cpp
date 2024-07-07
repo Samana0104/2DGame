@@ -27,7 +27,8 @@ void MySceneManager::Init()
 	AddScene(std::make_shared<MySceneStage2>(*this), L"STAGE2");
 	AddScene(std::make_shared<MySceneStage3>(*this), L"STAGE3");
 
-	SetCurrentScene(L"LOBBY");
+	mCurrentScene = GetResource(L"LOBBY");
+	mCurrentScene->Start();
 }
 
 void MySceneManager::Update(const float _deltaTime)
@@ -35,8 +36,9 @@ void MySceneManager::Update(const float _deltaTime)
 	// 이거 없으면 현재 실행되고 있는 다 끝나기도 전에 바뀜
 	if (!mQueueForWaiting.empty()) 
 	{
+		mCurrentScene->End();
 		mCurrentScene = mQueueForWaiting.front();
-		mCurrentScene->Execute();
+		mCurrentScene->Start();
 		mQueueForWaiting.pop();
 	}
 
@@ -55,5 +57,5 @@ void MySceneManager::Release()
 	for (auto& scene : scenes)
 		scene.second->Release();
 
-	Clear();
+	ClearResources();
 }

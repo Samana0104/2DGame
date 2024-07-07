@@ -12,11 +12,10 @@ namespace MyProject
 		FMOD::Channel*	mSoundChannel;
 
 		std::wstring	mSoundPath;
-		wchar_t			mSoundTimer[MAX_PATH];
-		unsigned int	mSoundSizeInMS;
-
 		float			mSoundVolume;
 
+		//wchar_t			mSoundTimer[MAX_PATH];
+		//unsigned int	mSoundSizeInMS;
 	private:
 		bool CreateSound(const wstringV _filePath);
 

@@ -90,6 +90,10 @@ void MySceneStage::Reset()
 {
 }
 
-void MySceneStage::Execute()
+void MySceneStage::Start()
+{
+}
+
+void MySceneStage::End()
 {
 }

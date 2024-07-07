@@ -14,12 +14,24 @@ void CollisionComponent::AddCollisionArea(const RECT_F _collisionArea)
     mCollisionAreas.push_back(_collisionArea);
 }
 
+void CollisionComponent::AddCollisionArea(const vec2 _scaleVec)
+{
+    RECT_F rt =
+    {
+        -_scaleVec.x * 0.5f,
+        _scaleVec.y * 0.5f,
+        _scaleVec.x * 0.5f,
+        -_scaleVec.y * 0.5f
+    };
+
+    mCollisionAreas.push_back(rt);
+}
 void CollisionComponent::SetCollisionable(bool _isCollisionable)
 {
     mIsCollisionable = _isCollisionable;
 }
 
-void CollisionComponent::ClearCollisionArea()
+void CollisionComponent::ClearCollisionAreas()
 {
     mCollisionAreas.clear();
 }
@@ -49,25 +61,22 @@ bool CollisionComponent::IsCollision(const RECT_F& _target)
     return false;
 }
 
-void CollisionComponent::IsCollisionWithEvent(MyActor & _targetObj)
+void CollisionComponent::IsCollisionWithEvent(CollisionComponent& _targetCollision)
 {
     // 충돌 오브젝트가 아니라면
-    CollisionComponent& targetComponent  = _targetObj.GetCollisionComponent();
 
-    if (!mIsCollisionable || !targetComponent.mIsCollisionable)
+    if (!mIsCollisionable || !_targetCollision.mIsCollisionable)
         return;
 
     vec2 myLocation = mObj->GetLocation();
     RECT_F myCollisionRect;
-    auto a = MyResourceManager::GetInstance().mFont[L"DEBUG_FONT"]->GetBrush();
 
-    // 이차원 위치 벡터를 더해야하는데 잘못 더한듯
-    vec2 targetLocation = _targetObj->GetLocation();
+    vec2 targetLocation = _targetCollision.mObj->GetLocation();
     RECT_F targetCollisionRect;
 
     for (auto& selfRange : mCollisionAreas)
     {
-        for(auto& targetRange : targetComponent.mCollisionAreas)
+        for(auto& targetRange : _targetCollision.mCollisionAreas)
         {
 			myCollisionRect =
 			{
@@ -84,20 +93,12 @@ void CollisionComponent::IsCollisionWithEvent(MyActor & _targetObj)
 				targetRange.bottom + targetLocation.y
 			};
 
-
-            RECT_F n1 = MyTransformer2D::CartesianToPixelRect(myCollisionRect);
-            RECT_F n2 = MyTransformer2D::CartesianToPixelRect(targetCollisionRect);
-
-            D3Device::GetInstance().mD2dRT->BeginDraw();
-            D3Device::GetInstance().mD2dRT->DrawRectangle(&n1, a.Get());
-            D3Device::GetInstance().mD2dRT->DrawRectangle(&n2, a.Get());
-            D3Device::GetInstance().mD2dRT->EndDraw();
             if (IsAABBCollision(myCollisionRect, targetCollisionRect))
             {
                 if (mCollisionFunc != nullptr)
-                    mCollisionFunc(myCollisionRect, targetCollisionRect, _targetObj);
-                if(targetComponent.mCollisionFunc != nullptr)
-                    targetComponent.mCollisionFunc(myCollisionRect, targetCollisionRect,  _targetObj);
+                    mCollisionFunc(myCollisionRect, targetCollisionRect, _targetCollision.mObj);
+                if(_targetCollision.mCollisionFunc != nullptr)
+                    _targetCollision.mCollisionFunc(targetCollisionRect, myCollisionRect, mObj);
             }
 		}
     }
@@ -115,8 +116,85 @@ void CollisionComponent::RegisterCollisionEvent(COLLISION_FUNC _func)
 
 void CollisionComponent::ResizeCollisionArea()
 {
-    ClearCollisionArea();
+    ClearCollisionAreas();
     mCollisionAreas.push_back(mObj->GetCartesianScaleRectF());
+}
+
+RECT_F CollisionComponent::GetIntersectionRect(const RECT_F& _rt1, const RECT_F& _rt2)
+{
+    float left, top;
+    float right, bottom;
+
+    left   = max(_rt1.left, _rt2.left);
+    top    = min(_rt1.top, _rt2.top);
+    right  = min(_rt1.right, _rt2.right);
+    bottom = max(_rt1.bottom, _rt2.bottom);
+
+    return {left, top, right, bottom};
+}
+
+vec2 CollisionComponent::GetCorrectionForCollision(const vec2 _offsetDir, const RECT_F& _rt1, const RECT_F& _rt2)
+{
+    vec2 correctionVec = { 0.f, 0.f };
+    
+    RECT_F beforeRt1X =
+    {
+        _rt1.left   - _offsetDir.x,
+        _rt1.top,
+        _rt1.right  - _offsetDir.x,
+        _rt1.bottom,
+    };
+
+    RECT_F beforeRt1Y =
+    {
+        _rt1.left,
+        _rt1.top    - _offsetDir.y,
+        _rt1.right,
+        _rt1.bottom - _offsetDir.y
+    };
+    
+    RECT_F intersectionRt = GetIntersectionRect(_rt1, _rt2);
+
+	float  intersectWidth  = abs(intersectionRt.right - intersectionRt.left);
+	float  intersectHeight = abs(intersectionRt.top - intersectionRt.bottom);
+
+    bool   IsXAxisCollided  = IsAABBCollision(beforeRt1Y, _rt2); // 만약 충돌이면 x와 충돌지점이라는 뜻
+    bool   IsYAxisCollided  = IsAABBCollision(beforeRt1X, _rt2); // 만약 충돌이면 y와 충돌지점이라는 뜻
+
+    // 두 충돌은 따로 특수처리
+   // if (IsXAxisCollided && IsYAxisCollided)
+   // {
+   //     if (intersectWidth < intersectHeight)
+   //     {
+			//if (_offsetDir.x >= TOLERANCE)
+			//	correctionVec.x = -intersectWidth - TOLERANCE;
+			//else if (_offsetDir.x <= -TOLERANCE)
+			//	correctionVec.x = intersectWidth + TOLERANCE;
+   //     }
+   //     else
+   //     {
+			//if (_offsetDir.y >= TOLERANCE)
+			//	correctionVec.y = -intersectHeight - TOLERANCE;
+			//else if (_offsetDir.y <= -TOLERANCE)
+			//	correctionVec.y = intersectHeight + TOLERANCE;
+   //     }
+   // } 
+	if (IsXAxisCollided) 
+    {
+        if(_offsetDir.x >= TOLERANCE)
+			correctionVec.x = -intersectWidth - TOLERANCE;
+        else if(_offsetDir.x <= -TOLERANCE)
+			correctionVec.x = intersectWidth + TOLERANCE;
+    }
+    else if(IsYAxisCollided)
+    {
+        if (_offsetDir.y >= TOLERANCE)
+            correctionVec.y = -intersectHeight - TOLERANCE;
+        else if(_offsetDir.y <= -TOLERANCE)
+            correctionVec.y = intersectHeight + TOLERANCE;
+    }
+   
+    return correctionVec;
 }
 
 bool CollisionComponent::IsPointInRect(const RECT_F rt1, const vec2 pt)
@@ -133,27 +211,29 @@ bool CollisionComponent::IsPointInRect(const RECT_F rt1, const vec2 pt)
 
 bool CollisionComponent::IsAABBCollision(const RECT_F& rt1, const RECT_F& rt2)
 {
-    // 내 생각에는 여기 AABB 콜리젼이 잘못된듯?
-	float minX, maxX, minY, maxY;
-	minX = min(rt1.left, rt2.left);
-	maxX = max(rt1.right, rt2.right);
-	minY = min(rt1.top, rt2.top);
-	maxY = max(rt1.bottom, rt2.bottom);
+    float left, top;
+    float right, bottom;
 	float sizeX, sizeY;
-	sizeX = maxX - minX;
-	sizeY = maxY - minY;
+    float rt1Width, rt1Height;
+    float rt2Width, rt2Height;
 
-	float  rt1W, rt1H, rt2W, rt2H;
-	rt1W = rt1.right - rt1.left;// rt1.w + rt2.w;
-	rt1H = rt1.bottom - rt1.top;
-	rt2W = rt2.right - rt2.left;// rt1.w + rt2.w;
-	rt2H = rt2.bottom - rt2.top;
+	left   = min(rt1.left, rt2.left);
+	top    = max(rt1.top, rt2.top);
+	right  = max(rt1.right, rt2.right);
+	bottom = min(rt1.bottom, rt2.bottom);
 
-	if ( sizeX <= (rt1W + rt2W) &&
-		 sizeY <= (rt1H + rt2H))
-	{
+    sizeX = abs(right - left);
+    sizeY = abs(top - bottom);
+
+	rt1Width = abs(rt1.right - rt1.left);// rt1.w + rt2.w;
+	rt1Height = abs(rt1.top - rt1.bottom);
+	rt2Width = abs(rt2.right - rt2.left);// rt1.w + rt2.w;
+	rt2Height = abs(rt2.top - rt2.bottom);
+
+	if ((rt1Width + rt2Width) > sizeX && 
+        (rt1Height + rt2Height) > sizeY)
 		return true;
-	}
+
 	return false;
 }
 

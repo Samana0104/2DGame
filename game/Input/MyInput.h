@@ -29,7 +29,8 @@ namespace MyProject
 	class MyInput : public Singleton<MyInput>
 	{
 	private:
-		static inline const UINT KEY_COUNT = 256;
+		static inline const UINT  KEY_COUNT   = 256;
+		static inline const SHORT PRESSED_KEY = static_cast<SHORT>(0x8000);
 
 		CALLBACK_ID registerCallbackID = 0;
 		std::map<CALLBACK_ID, ONMOUSEMOVE_FUNC> mCallbackOnMouseMove;
@@ -81,7 +82,7 @@ namespace MyProject
 		bool IsKeyDown(const UINT _key) const;
 		bool IsKeyFree(const UINT _key) const;
 		bool IsKeyHold(const UINT _key) const;
-		bool IsKeyPressed(const SHORT _key);
+		bool IsKeyPressed(const SHORT _key) const;
 
 		CALLBACK_ID	RegisterCallBackOnMouseMove(ONMOUSEMOVE_FUNC _func);
 		CALLBACK_ID	RegisterCallBackOnMousePush(ONMOUSEPUSH_FUNC _func);

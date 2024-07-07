@@ -164,12 +164,16 @@ void MyTileManager::SetSize(const vec2 _size)
 	mTileSize = { widthPerTile, heightPerTile };
 }
 
-void MyTileManager::Update(MyActor& _actor)
+const vec2& MyTileManager::GetTileSize() const
+{
+	return mTileSize;
+}
+
+void MyTileManager::ProcessCollision(MyActor& _actor)
 {
 	for (auto& tile : mCollisions)
-	{
-		tile->GetCollisionComponent().IsCollisionWithEvent(_actor);
-	}
+		tile->GetCollisionComponent().IsCollisionWithEvent(
+			_actor.GetCollisionComponent());
 }
 
 void MyTileManager::Render()

@@ -98,6 +98,7 @@ void MyCore::ENGINE_BEGIN(HINSTANCE _hinstance, LONG _width, LONG _height)
 
 void MyCore::ENGINE_END()
 {
+	MyObjectManager::GetInstance().Release();
 	MyResourceManager::GetInstance().Release();
 	MyInput::GetInstance().Release();
 	D3Device::GetInstance().Release();

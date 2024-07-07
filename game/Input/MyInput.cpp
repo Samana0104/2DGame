@@ -14,7 +14,7 @@ void MyInput::UpdateKeyState(const UINT _key)
 
 	SHORT currentKey = GetAsyncKeyState(_key);
 
-	if (IsKeyPressed(currentKey))
+	if (currentKey & PRESSED_KEY)
 	{
 		(IsKeyFree(_key) || IsKeyUp(_key)) ? SetKeyDown(_key) : SetKeyHold(_key);
 	}
@@ -78,10 +78,10 @@ bool MyInput::IsKeyHold(const UINT _key) const
 	return mCurrentKeyState[_key] == KeyState::KEY_HOLD;
 }
 
-bool MyInput::IsKeyPressed(const SHORT _key)
+bool MyInput::IsKeyPressed(const SHORT _key) const
 {
-	static const SHORT PRESSED_KEY = static_cast<SHORT>(0x8000);
-	return _key & PRESSED_KEY;
+	return mCurrentKeyState[_key] == KeyState::KEY_DOWN ||
+		mCurrentKeyState[_key] == KeyState::KEY_HOLD;
 }
 
 void MyInput::SetKeyUp(const UINT _key)

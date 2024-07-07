@@ -16,7 +16,7 @@ namespace MyProject
 		virtual void OnCollision(RECT_F& _self, RECT_F& _target, MyActor& _targetObj) override;
 
 	public:
-		MyTile() = default;
+		MyTile();
 
 		void SetUVRect(const RECT_F _uv);
 		void SetRow(const int _row);

@@ -2,6 +2,8 @@
 #include "MySceneManager.h"
 #include "MyTileManager.h"
 #include "MyTextButton.h"
+#include "MyPlayer.h"
+
 namespace MyProject
 {
 	class MySceneStage2 : public MyScene
@@ -22,6 +24,6 @@ namespace MyProject
 		virtual void Render() override;
 		virtual void Release() override;
 		virtual void Reset() override;
-		virtual void Execute() override;
+		virtual void Start() override;
 	};
 }

@@ -22,13 +22,22 @@ namespace MyProject
 	private:
 		MyActor*		mObjectOnHand = nullptr;
 		SpriteComponent mSprite[8];
+		PlayerAction	mCurrentAction = PlayerAction::STAND;
 		
-		PlayerAction mCurrentAction = PlayerAction::STAND;
+		bool mIsJumping = false;
+		bool mIsLeft	= false;
 
 	private:
+		void InitSprite();
+
+		void SetSpriteForRight();
+		void SetSpriteForLeft();
+
 		void Right();
 		void Left();
 		void Stand();
+		void Jump();
+		void Drop();
 
 		void UpdatePlayerState();
 

@@ -82,14 +82,16 @@ void MySceneStage3::Update(float _deltaTime)
 		}
 	}
 
+	mObjManager.Update(_deltaTime);
+
 	for (int i = 0; i < 3; i++)
 		mButtons[i].Update(_deltaTime);
-
+	//mTileMap.ProcessCollision(mPlayer);
 }
 
 void MySceneStage3::Render()
 {
-	mTileMap.Render();
+	mObjManager.Render();
 
 	if (isPause)
 	{
@@ -107,6 +109,17 @@ void MySceneStage3::Reset()
 {
 }
 
-void MySceneStage3::Execute()
+void MySceneStage3::Start()
 {
+	auto player  = std::make_shared<MyPlayer>();
+
+	(*player)->SetLocation({ 0.f, 0.f });
+
+	mButtons[mCurrentButton].SetCurrentState(SelectState::DEFAULT);
+	mCurrentButton = 0;
+	mButtons[mCurrentButton].SetCurrentState(SelectState::ACTIVE);
+	isPause = false;
+
+	mObjManager.SetTileManager(&mTileMap);
+	mObjManager.AddObject(player);
 }

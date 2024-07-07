@@ -26,9 +26,13 @@ namespace MyProject
 		MyTileManager();
 
 		bool LoadScript(const wstringV _filePath);
+
 		void SetPosition(const vec2 _pos);
 		void SetSize(const vec2 _size);
-		void Update(MyActor& _actor);
+
+		const vec2& GetTileSize() const;
+
+		void ProcessCollision(MyActor & _actor);
 		void Render();
 	};
 }

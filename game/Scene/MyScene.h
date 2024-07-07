@@ -2,6 +2,7 @@
 #include "MyCoreAPI.h"
 #include "MyInput.h"
 #include "MyResourceManger.h"
+#include "MyObjectManager.h"
 
 namespace MyProject
 {
@@ -10,10 +11,11 @@ namespace MyProject
 	class MyScene
 	{
 	protected:
-		MySceneManager& mSceneManager;
+		MySceneManager&	   mSceneManager;
 
-		MyInput& mInput = MyInput::GetInstance();
-		MyResourceManager& mManager = MyResourceManager::GetInstance();
+		MyInput&		   mInput	   = MyInput::GetInstance();
+		MyResourceManager& mManager	   = MyResourceManager::GetInstance();
+		MyObjectManager&   mObjManager = MyObjectManager::GetInstance();
 
 		//SCENE_KEY		mSceneID;
 		// 필요하면 추가함 
@@ -24,12 +26,13 @@ namespace MyProject
 		//const SCENE_KEY& GetSceneID() const { return mSceneID; }
 		//void SetSceneID(SCENE_KEY _sceneID) { mSceneID = _sceneID;  }
 
-		virtual void Init() = 0;
-		virtual void Update(float _deltaTime) = 0;
-		virtual void Render() = 0;
+		virtual void Init()    = 0;
+		virtual void Render()  = 0;
 		virtual void Release() = 0;
-		virtual void Reset() = 0;
-		virtual void Execute() = 0;
+		virtual void Reset()   = 0;
+		virtual void Start() = 0;
+		virtual void End() { mObjManager.ClearObject(); }
+		virtual void Update(float _deltaTime) = 0;
 	};
 }
 

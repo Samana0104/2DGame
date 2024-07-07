@@ -2,6 +2,7 @@
 #include "MySceneManager.h"
 #include "MyTileManager.h"
 #include "MyTextButton.h"
+#include "MyWoodBox.h"
 #include "MyPlayer.h"
 
 namespace MyProject
@@ -12,7 +13,6 @@ namespace MyProject
 		MyTileManager mTileMap;
 		MyTextButton mButtons[3];
 		MyObject mPauseBackground;
-		MyPlayer mPlayer;
 
 		int mCurrentButton;
 		bool isPause = false;
@@ -25,7 +25,7 @@ namespace MyProject
 		virtual void Render() override;
 		virtual void Release() override;
 		virtual void Reset() override;
-		virtual void Execute() override;
+		virtual void Start() override;
 	};
 }
 

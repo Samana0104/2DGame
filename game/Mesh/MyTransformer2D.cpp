@@ -235,14 +235,15 @@ vec2 MyTransformer2D::PixelToCartesian(const vec2 _pos)
 	     0			  cartesian/window(y)	-cartesian/2(y)
 		 0						0				1	
 	*/
+	// viewport 기준으로 맞춤
 	float leftTopX = D3Device::GetInstance().mViewPort.TopLeftX;
 	float leftTopY = D3Device::GetInstance().mViewPort.TopLeftY;
 
 	const vec2 viewportSize = D3Device::GetInstance().GetViewportSize();
 
-	const vec2 windowSize = MyWindow::GetInstance().GetWindowSizeVec2();
-	return { leftTopX + viewportSize.x * _pos.x / windowSize.x - viewportSize.x / 2,
-			 leftTopY -viewportSize.y * _pos.y / windowSize.y + viewportSize.y / 2 };
+	return { mCartesianSize.x * (_pos.x-leftTopX) / viewportSize.x - mCartesianSize.x / 2,
+			-mCartesianSize.y * (_pos.y-leftTopY) / viewportSize.y + mCartesianSize.y / 2};
+
 }
 
 vec2 MyTransformer2D::PixelToNDC(const vec2 _pos, const vec2 _rectSize)

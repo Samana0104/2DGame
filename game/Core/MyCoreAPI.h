@@ -8,7 +8,6 @@ namespace MyProject
 
 	using COLOR_F	= D2D1_COLOR_F;
 
-	// Pixel coordinate
 	using RECT_L		= D2D1_RECT_L;
 	using RECT_F		= D2D1_RECT_F;
 	using RECT_U		= D2D1_RECT_U;
@@ -18,9 +17,6 @@ namespace MyProject
 	
 	using stringV		= std::string_view;
 	using wstringV		= std::wstring_view;
-
-	using STATE_ID		= UINT;
-	using EVENT_ID		= UINT;
 
 	using MESH_KEY		= std::wstring;
 	using FONT_KEY		= std::wstring;
@@ -32,6 +28,7 @@ namespace MyProject
 	using SOUND_KEY		= std::wstring;
 	using SPRITE_KEY	= std::wstring;
 
+	static inline const float TOLERANCE = 1e-4f;
 	class MyCoreAPI
 	{
 	public:

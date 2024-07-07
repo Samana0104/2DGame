@@ -17,6 +17,7 @@ v 1 16 32 31 47 cave.png PixelShaderAlpha.hlsl
 | 1 16 16 31 31 cave.png PixelShaderAlpha.hlsl
 u 1 16 0 31 15 cave.png PixelShaderAlpha.hlsl
 #batch < 키 값 기준으로 배치 >
+oooooooooooooooooooo
 ooO6v...v|.......v79
 oOo6.....v........13
 2223............7889

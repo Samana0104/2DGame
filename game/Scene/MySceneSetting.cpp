@@ -32,6 +32,10 @@ void MySceneSetting::Reset()
 {
 }
 
-void MySceneSetting::Execute()
+void MySceneSetting::Start()
+{
+}
+
+void MySceneSetting::End()
 {
 }

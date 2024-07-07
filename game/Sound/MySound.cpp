@@ -43,9 +43,9 @@ void MySound::InitSound()
 {
 	Stop();
 
-	ZeroMemory(mSoundTimer, sizeof(wchar_t) * MAX_PATH);
 	mSoundChannel = nullptr;
-	mSoundSizeInMS = 0;
+	//ZeroMemory(mSoundTimer, sizeof(wchar_t) * MAX_PATH);
+	//mSoundSizeInMS = 0;
 	mSoundVolume = 0.5f;
 }
 
@@ -57,12 +57,12 @@ bool MySound::Play(bool _loop)
 		return false;
 
 	mSoundChannel->setVolume(mSoundVolume);
-	mSound->getLength(&mSoundSizeInMS, FMOD_TIMEUNIT_MS);
-	_stprintf_s(mSoundTimer,
-		L"전체시간 [%02d:%02d:%02d]",
-		mSoundSizeInMS / 1000 / 60,
-		mSoundSizeInMS / 1000 % 60,
-		mSoundSizeInMS / 10 / 60);
+	//mSound->getLength(&mSoundSizeInMS, FMOD_TIMEUNIT_MS);
+	//_stprintf_s(mSoundTimer,
+	//	L"전체시간 [%02d:%02d:%02d]",
+	//	mSoundSizeInMS / 1000 / 60,
+	//	mSoundSizeInMS / 1000 % 60,
+	//	mSoundSizeInMS / 10 / 60);
 
 	if (_loop)
 		mSoundChannel->setMode(FMOD_LOOP_NORMAL);
@@ -124,13 +124,13 @@ void MySound::Update()
 
 	mFmodSys->update();
 
-	unsigned int ms;
-	mSoundChannel->getPosition(&ms, FMOD_TIMEUNIT_MS);
-	_stprintf_s(mSoundTimer,
-		L"전체시간[%02d:%02d:%02d]\n",
-		ms / 1000 / 60,
-		ms / 1000 % 60,
-		ms / 10 / 60);
-	//OutputDebugString(m_msSound);
+	//unsigned int ms;
+	//mSoundChannel->getPosition(&ms, FMOD_TIMEUNIT_MS);
+	//_stprintf_s(mSoundTimer,
+	//	L"전체시간[%02d:%02d:%02d]\n",
+	//	ms / 1000 / 60,
+	//	ms / 1000 % 60,
+	//	ms / 10 / 60);
+	////OutputDebugString(m_msSound);
 }
 

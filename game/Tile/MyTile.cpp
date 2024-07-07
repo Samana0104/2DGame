@@ -2,6 +2,11 @@
 #include "MyTile.h"
 using namespace MyProject;
 
+MyTile::MyTile()
+{
+	SetObjectCode(ObjectCode::TILE);
+}
+
 void MyTile::SetUVRect(const RECT_F _uv)
 {
 	mUV = _uv;

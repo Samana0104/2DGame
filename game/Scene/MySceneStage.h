@@ -21,6 +21,7 @@ namespace MyProject
 		virtual void Render() override;
 		virtual void Release() override;
 		virtual void Reset() override;
-		virtual void Execute() override;
+		virtual void Start() override;
+		virtual void End() override;
 	};
 }
