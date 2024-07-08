@@ -1,6 +1,8 @@
 #pragma once
 #include "MyStageInterface.h"
 #include "MyPlayer.h"
+#include "MyWoodBox.h"
+#include "MyRuby.h"
 
 namespace MyProject
 {

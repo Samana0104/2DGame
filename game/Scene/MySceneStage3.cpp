@@ -101,14 +101,24 @@ void MySceneStage3::Reset()
 void MySceneStage3::Start()
 {
 	auto player = std::make_unique<MyPlayer>();
+	auto woodBox1 = std::make_unique<MyWoodBox>();
+	auto woodBox2 = std::make_unique<MyWoodBox>();
+	auto ruby  = std::make_unique<MyRuby>(mSceneManager);
+
+	(*player)->SetLocation({ 0.f, -30.f });
+	(*woodBox1)->SetLocation({ 2.5f, -28.f });
+	(*woodBox2)->SetLocation({ 1.5f, -36.f });
+	(*ruby)->SetLocation({ -38.f, 19.f });
 
 	mButtons[mCurrentButton].SetCurrentState(SelectState::DEFAULT);
 	mCurrentButton = 0;
 	mButtons[mCurrentButton].SetCurrentState(SelectState::ACTIVE);
 	isPause = false;
 
-	(*player)->SetLocation({ 0.f, 30.f });
 	mObjManager.AddObject(std::move(player));
+	mObjManager.AddObject(std::move(woodBox1));
+	mObjManager.AddObject(std::move(woodBox2));
+	mObjManager.AddObject(std::move(ruby));
 
 	mObjManager.SetTileManager(&mTileMap);
 }

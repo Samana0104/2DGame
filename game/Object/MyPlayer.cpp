@@ -15,15 +15,12 @@ MyPlayer::MyPlayer()
 
 void MyPlayer::OnCollision(RECT_F& _self, RECT_F& _target, MyActor& _targetObj)
 {
-	RECT_F intersectRect = mCollision.GetIntersectionRect(_self, _target);
 	vec2 targetLocation = _targetObj->GetLocation();
 	vec2 correction	= mCollision.GetCorrectionForCollision(
 		mMove.GetOffset(), targetLocation, _self, _target);
-	vec2 targetSpeed = _targetObj.GetMoveComponent().GetVelocity();
-	vec2 targetScale = _targetObj->GetScale();
+	vec2 mVelocity = mMove.GetVelocity();
+
 	ObjectCode targetObjCode = _targetObj.GetObjectCode();
-	float width = intersectRect.right - intersectRect.left;
-	float height = intersectRect.top - intersectRect.bottom;
 
 	switch (targetObjCode)
 	{
@@ -46,15 +43,10 @@ void MyPlayer::OnCollision(RECT_F& _self, RECT_F& _target, MyActor& _targetObj)
 			mMove.SetSpeedY(0.f);
 		}
 		
-		if (abs(correction.x) >= TOLERANCE) // º®¿¡ ºÎµúÈú ¶§
-			mMove.SetSpeedX(0.f);
 		return;
 
 	case ObjectCode::WOOD_BOX:
-		//if (mObjectOnHand != nullptr)
-		//	(*mObjectOnHand)->AddLocation(correction);
-
-		if (correction.y >= TOLERANCE)
+		if (correction.y > TOLERANCE)
 		{
 			if (mIsJumping)
 				mManager.mSound[L"land.wav"]->Play();
@@ -68,6 +60,12 @@ void MyPlayer::OnCollision(RECT_F& _self, RECT_F& _target, MyActor& _targetObj)
 	// GRAP
 	if (mInput.GetCurrentKeyState(0x58) == KeyState::KEY_DOWN && mCanGrap)
 	{
+		RECT_F intersectRect = mCollision.GetIntersectionRect(_self, _target);
+		vec2 targetSpeed = _targetObj.GetMoveComponent().GetVelocity();
+		vec2 targetScale = _targetObj->GetScale();
+		float width = intersectRect.right - intersectRect.left;
+		float height = intersectRect.top - intersectRect.bottom;
+
 		if (width < targetScale.x * 0.5f || height < targetScale.y * 0.5f)
 			return;
 

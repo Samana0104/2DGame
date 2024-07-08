@@ -14,13 +14,13 @@ void MySceneSetting::Update(float _deltaTime)
 
 void MySceneSetting::Render()
 {
-	mManager.mFont.DrawTextForDebugging(L"%f %f ->\n %f %f ->\n %f %f",
-		mInput.GetCurrentMousePosVec2().x,
-		mInput.GetCurrentMousePosVec2().y,
-		MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).x,
-		MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).y,
-		MyTransformer2D::CartesianToPixel(MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2())).x,
-		MyTransformer2D::CartesianToPixel(MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2())).y);
+	//mManager.mFont.DrawTextForDebugging(L"%f %f ->\n %f %f ->\n %f %f",
+	//	mInput.GetCurrentMousePosVec2().x,
+	//	mInput.GetCurrentMousePosVec2().y,
+	//	MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).x,
+	//	MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).y,
+	//	MyTransformer2D::CartesianToPixel(MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2())).x,
+	//	MyTransformer2D::CartesianToPixel(MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2())).y);
 	//mManager.mFont.DrawTextForDebugging(L"¾Æ Èûµé´Ù¾Æ");
 }
 

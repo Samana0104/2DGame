@@ -11,6 +11,8 @@ void MyStageInterface::Render()
 		for (int i = 0; i < 3; i++)
 			mButtons[i].Render();
 	}
+	//mManager.mFont.DrawTextForDebugging(L"%f %f", MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).x,
+	//	MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).y);
 }
 
 void MyStageInterface::Release()

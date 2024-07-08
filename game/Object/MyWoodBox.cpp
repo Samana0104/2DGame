@@ -26,10 +26,16 @@ void MyWoodBox::OnCollision(RECT_F& _self, RECT_F& _target, MyActor& _targetObj)
 	case ObjectCode::DOOR:
 		mTransform.AddLocation(correction);
 
-		if (abs(correction.x) > TOLERANCE)
+		if (correction.x > TOLERANCE)
 		{
 			mManager.mSound[L"box-hit.wav"]->Play();
-			mMove.SetSpeedX(0.f);
+			mMove.SetSpeedX(5.f);
+			mMove.SetAccelY(-160.f);
+		}
+		else if (correction.x < -TOLERANCE)
+		{
+			mManager.mSound[L"box-hit.wav"]->Play();
+			mMove.SetSpeedX(-5.f);
 			mMove.SetAccelY(-160.f);
 		}
 
@@ -62,6 +68,7 @@ void MyWoodBox::OnCollision(RECT_F& _self, RECT_F& _target, MyActor& _targetObj)
 		if (correction.y >= TOLERANCE)
 		{
 			mTransform.AddLocation(correction);
+
 			mMove.SetSpeedY(0.f);
 			mMove.SetSpeedX(0.f);
 		}
