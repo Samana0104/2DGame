@@ -231,6 +231,16 @@
     <ClInclude Include="Object\MyObjectManager.h">
       <Filter>Engine\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Object\MyRuby.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MyDoor.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MyKey.h">
+      <Filter>Engine\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font\MyFontHandler.cpp">
@@ -386,6 +396,16 @@
     <ClCompile Include="Object\MyObjectManager.cpp">
       <Filter>Engine\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Object\MyRuby.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyDoor.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MyKey.cpp">
+      <Filter>Engine\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MyBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\data\shaders\PixelShader.hlsl">
@@ -407,6 +427,9 @@
       <Filter>Engine\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="..\data\Shaders\BackgroundPause.hlsl">
+      <Filter>Engine\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="..\data\Shaders\Ruby.hlsl">
       <Filter>Engine\HLSL</Filter>
     </FxCompile>
   </ItemGroup>

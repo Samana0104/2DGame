@@ -4,6 +4,7 @@
 #include "MyTextButton.h"
 #include "MyWoodBox.h"
 #include "MyPlayer.h"
+#include "MyRuby.h"
 
 namespace MyProject
 {

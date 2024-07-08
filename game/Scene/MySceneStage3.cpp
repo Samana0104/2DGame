@@ -73,6 +73,9 @@ void MySceneStage3::Update(float _deltaTime)
 			}
 			else if (mCurrentButton == 1)
 			{
+				mManager.mSound[L"menu-select.wav"]->Play();
+				Reset();
+
 			}
 			else if (mCurrentButton == 2)
 			{
@@ -107,13 +110,15 @@ void MySceneStage3::Release()
 
 void MySceneStage3::Reset()
 {
+	mObjManager.ClearObject();
+	Start();
 }
 
 void MySceneStage3::Start()
 {
 	auto player  = std::make_shared<MyPlayer>();
 
-	(*player)->SetLocation({ 0.f, 0.f });
+	(*player)->SetLocation({ 0.f, 30.f });
 
 	mButtons[mCurrentButton].SetCurrentState(SelectState::DEFAULT);
 	mCurrentButton = 0;

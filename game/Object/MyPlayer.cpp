@@ -10,16 +10,25 @@ MyPlayer::MyPlayer()
 	mTransform.SetScale({ 7.5f, 8.9f });
 	mMove.SetAccelY(-160.f);
 	mCollision.AddCollisionArea(scale);
+	SetObjectCode(ObjectCode::PLAYER);
 }
 
 void MyPlayer::OnCollision(RECT_F& _self, RECT_F& _target, MyActor& _targetObj)
 {
-	vec2 correction = CollisionComponent::GetCorrectionForCollision(mMove.GetOffset(), _self, _target);
+	RECT_F intersectRect = mCollision.GetIntersectionRect(_self, _target);
+	vec2 targetLocation = _targetObj->GetLocation();
+	vec2 correction	= mCollision.GetCorrectionForCollision(
+		mMove.GetOffset(), targetLocation, _self, _target);
+	vec2 targetSpeed = _targetObj.GetMoveComponent().GetVelocity();
+	vec2 targetScale = _targetObj->GetScale();
 	ObjectCode targetObjCode = _targetObj.GetObjectCode();
+	float width = intersectRect.right - intersectRect.left;
+	float height = intersectRect.top - intersectRect.bottom;
 
 	switch (targetObjCode)
 	{
 	case ObjectCode::TILE:
+	case ObjectCode::DOOR:
 		if (mObjectOnHand != nullptr)
 			(*mObjectOnHand)->AddLocation(correction);
 
@@ -37,33 +46,38 @@ void MyPlayer::OnCollision(RECT_F& _self, RECT_F& _target, MyActor& _targetObj)
 			mMove.SetSpeedY(0.f);
 		}
 		
-		if (abs(correction.x) > TOLERANCE)
+		if (abs(correction.x) >= TOLERANCE) // º®¿¡ ºÎµúÈú ¶§
 			mMove.SetSpeedX(0.f);
 		return;
 
 	case ObjectCode::WOOD_BOX:
-		if (correction.y > 0.f )
+		//if (mObjectOnHand != nullptr)
+		//	(*mObjectOnHand)->AddLocation(correction);
+
+		if (correction.y >= TOLERANCE)
 		{
+			if (mIsJumping)
+				mManager.mSound[L"land.wav"]->Play();
+
 			mTransform.AddLocation(correction);
 			mMove.SetSpeedY(0.f);
 			mIsJumping = false;
-			return;
 		}
 	}
 
-	if (mInput.GetCurrentKeyState(0x58) == KeyState::KEY_DOWN)
+	// GRAP
+	if (mInput.GetCurrentKeyState(0x58) == KeyState::KEY_DOWN && mCanGrap)
 	{
-		vec2 targetSpeed = _targetObj.GetMoveComponent().GetVelocity();
-		vec2 targetScale = _targetObj->GetScale();
-		vec2 myScale     = mTransform.GetScale();
+		if (width < targetScale.x * 0.5f || height < targetScale.y * 0.5f)
+			return;
 
 		if (mObjectOnHand == nullptr && 
 			abs(targetSpeed.x) < TOLERANCE && 
-			abs(targetSpeed.y) < TOLERANCE &&
 			!mIsJumping)
 		{
 			mManager.mSound[L"grab.wav"]->Play();
 			mObjectOnHand = &_targetObj;
+			mCanGrap = false;
 			_targetObj.GetMoveComponent().Stop();
 			_targetObj.GetCollisionComponent().SetCollisionable(false);
 		}
@@ -170,14 +184,16 @@ void MyPlayer::Jump()
 
 void MyPlayer::Drop()
 {
-	if (mObjectOnHand != nullptr)
+	if (mObjectOnHand != nullptr && mCanGrap)
 	{
-		mManager.mSound[L"drop.wav"]->Play();
 		mObjectOnHand->GetCollisionComponent().SetCollisionable(true);
+		mCanGrap = false;
+
 
 		if (mInput.IsKeyPressed(VK_LEFT))
 		{
 			(*mObjectOnHand)->SetLocation(mTransform.GetLocation());
+			mManager.mSound[L"throw.wav"]->Play();
 
 			if(mIsLeft)
 				(*mObjectOnHand)->AddLocation({ 1.f, 0.f });
@@ -188,33 +204,26 @@ void MyPlayer::Drop()
 		}
 		else if (mInput.IsKeyPressed(VK_RIGHT))
 		{
+			mManager.mSound[L"throw.wav"]->Play();
 			mObjectOnHand->GetMoveComponent().SetSpeedX(130.f);
 		}
 		else if (mInput.IsKeyPressed(VK_UP))
 		{
 			(*mObjectOnHand)->SetLocation(mTransform.GetLocation());
 
-			if(mIsLeft)
-				(*mObjectOnHand)->AddLocation({ 1.f, 0.f });
-			else
-				(*mObjectOnHand)->AddLocation({ -1.f, 0.f });
-
+			mManager.mSound[L"throw.wav"]->Play();
 			mObjectOnHand->GetMoveComponent().SetAccelY(-160.f);
 			mObjectOnHand->GetMoveComponent().SetSpeedY(67.f);
 		}
 		else if (mInput.IsKeyPressed(VK_DOWN))
 		{
+			mManager.mSound[L"throw.wav"]->Play();
 			mObjectOnHand->GetMoveComponent().SetAccelY(-160.f);
 			mObjectOnHand->GetMoveComponent().SetSpeedY(-90.f);
 		}
 		else
 		{
-			(*mObjectOnHand)->SetLocation(mTransform.GetLocation());
-			if(mIsLeft)
-				(*mObjectOnHand)->AddLocation({ 1.f, 0.f });
-			else
-				(*mObjectOnHand)->AddLocation({ -1.f, 0.f });
-
+			mManager.mSound[L"drop.wav"]->Play();
 			mObjectOnHand->GetMoveComponent().SetAccelY(-160.f);
 			mObjectOnHand->GetMoveComponent().SetSpeedY(30.f);
 		}
@@ -287,6 +296,17 @@ void MyPlayer::Update(const float _deltaTime)
 			(*mObjectOnHand)->SetLocation({ location.x-2.f, location.y+1 });
 		else
 			(*mObjectOnHand)->SetLocation({ location.x+2.f, location.y+1 });
+	}
+
+	if (!mCanGrap)
+	{
+		mGrapCooltime += _deltaTime;
+
+		if (mGrapCooltime >= 0.1f)
+		{
+			mGrapCooltime = 0.f;
+			mCanGrap = true;
+		}
 	}
 }
 

@@ -69,7 +69,8 @@ namespace MyProject
 		{ ShaderType::PIXEL, L"../data/Shaders/PixelShaderLight.hlsl", "PSMain"},
 		{ ShaderType::PIXEL, L"../data/Shaders/Background.hlsl", "PSMain"},
 		{ ShaderType::PIXEL, L"../data/Shaders/BackgroundMap.hlsl", "PSMain"},
-		{ ShaderType::PIXEL, L"../data/Shaders/BackgroundPause.hlsl", "PSMain"}
+		{ ShaderType::PIXEL, L"../data/Shaders/BackgroundPause.hlsl", "PSMain"},
+		{ ShaderType::PIXEL, L"../data/Shaders/Ruby.hlsl", "PSMain"}
 	};
 
 	inline static const std::vector<std::wstring> gSoundPath = {

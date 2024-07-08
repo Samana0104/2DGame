@@ -27,6 +27,9 @@ namespace MyProject
 		bool mIsJumping = false;
 		bool mIsLeft	= false;
 
+		float mGrapCooltime = 0.f;
+		bool  mCanGrap = false;
+
 	private:
 		void InitSprite();
 

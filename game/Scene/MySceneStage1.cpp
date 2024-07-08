@@ -71,6 +71,7 @@ void MySceneStage1::Update(float _deltaTime)
 			}
 			else if (mCurrentButton == 1)
 			{
+				mManager.mSound[L"menu-select.wav"]->Play();
 				Reset();
 			}
 			else if (mCurrentButton == 2)
@@ -97,9 +98,6 @@ void MySceneStage1::Render()
 		for (int i = 0; i < 3; i++)
 			mButtons[i].Render();
 	}
-	mManager.mFont.DrawTextForDebugging(L"%f %f",
-		MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).x,
-		MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).y);
 }
 
 void MySceneStage1::Release()
@@ -118,10 +116,13 @@ void MySceneStage1::Start()
 	auto woodBox2 = std::make_shared<MyWoodBox>();
 	auto woodBox3 = std::make_shared<MyWoodBox>();
 	auto player  = std::make_shared<MyPlayer>();
+	auto ruby  = std::make_shared<MyRuby>(mSceneManager);
 
-	(*player)->SetLocation({ 0.f, 0.f });
+	(*player)->SetLocation({ -62.f, -27.f });
 	(*woodBox1)->SetLocation({ 12.f, -10.f });
-	(*woodBox2)->SetLocation({ 14.f, 0.f });
+	(*woodBox2)->SetLocation({ 14.f, -2.f });
+	(*woodBox3)->SetLocation({ -28.f, -10.f });
+	(*ruby)->SetLocation({ 1.f, 30.f });
 
 	mButtons[mCurrentButton].SetCurrentState(SelectState::DEFAULT);
 	mCurrentButton = 0;
@@ -132,4 +133,6 @@ void MySceneStage1::Start()
 	mObjManager.AddObject(player);
 	mObjManager.AddObject(woodBox1);
 	mObjManager.AddObject(woodBox2);
+	mObjManager.AddObject(woodBox3);
+	mObjManager.AddObject(ruby);
 }

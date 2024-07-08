@@ -29,6 +29,7 @@ namespace MyProject
 		D2D1_MATRIX_3X2_F mTempMat;
 		CALLBACK_ID		  mWMSizeID;
 
+
 	private:
 		void	DrawBegin();
 		void	DrawEnd();

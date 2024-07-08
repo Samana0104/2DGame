@@ -7,4 +7,7 @@ enum class ObjectCode
 	BOX = 2,
 	WOOD_BOX = 3,
 	KEY = 4,
+	DOOR = 5,
+	PLAYER = 6,
+	RUBY = 7
 };

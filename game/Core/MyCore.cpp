@@ -25,6 +25,10 @@ void MyCore::GameRender()
 
 void MyCore::GamePostRender()
 {
+#ifdef _DEBUG
+	mManager.mFont.DrawRectForDebugging();
+#endif
+
 	mDevice.mSwapChain->Present(1, 0);
 }
 

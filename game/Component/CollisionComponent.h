@@ -43,9 +43,11 @@ namespace MyProject
 		void RegisterCollisionEvent(COLLISION_FUNC _func);
 		void ResizeCollisionArea();
 
+		vec2 GetCorrectionForCollision(const vec2 _offsetDir, const vec2 _targetLocation, 
+			const RECT_F& _rt1, const RECT_F& _rt2);
+
 		static RECT_F GetIntersectionRect(const RECT_F& _rt1, const RECT_F& _rt2);
 		// 충돌 처리 날 시 알아서 보정 값 계산 후 반환 rt1 자신 rt2 타겟
-		static vec2   GetCorrectionForCollision(const vec2 _offsetDir, const RECT_F& _rt1, const RECT_F& _rt2);
 
 		static bool IsPointInRect(const RECT_F rt1, const vec2 pt);
 		static bool IsAABBCollision(const RECT_F& rt1, const RECT_F& rt2);

@@ -133,9 +133,12 @@ RECT_F CollisionComponent::GetIntersectionRect(const RECT_F& _rt1, const RECT_F&
     return {left, top, right, bottom};
 }
 
-vec2 CollisionComponent::GetCorrectionForCollision(const vec2 _offsetDir, const RECT_F& _rt1, const RECT_F& _rt2)
+vec2 CollisionComponent::GetCorrectionForCollision(const vec2 _offsetDir, const vec2 _targetLocation, 
+			const RECT_F& _rt1, const RECT_F& _rt2)
 {
     vec2 correctionVec = { 0.f, 0.f };
+    vec2 myLocation    =  mObj->GetLocation();
+    vec2 FromObjToTarget = _targetLocation - myLocation;
     
     RECT_F beforeRt1X =
     {
@@ -164,34 +167,54 @@ vec2 CollisionComponent::GetCorrectionForCollision(const vec2 _offsetDir, const 
     // 두 충돌은 따로 특수처리
    // if (IsXAxisCollided && IsYAxisCollided)
    // {
-   //     if (intersectWidth < intersectHeight)
-   //     {
 			//if (_offsetDir.x >= TOLERANCE)
 			//	correctionVec.x = -intersectWidth - TOLERANCE;
 			//else if (_offsetDir.x <= -TOLERANCE)
 			//	correctionVec.x = intersectWidth + TOLERANCE;
-   //     }
-   //     else
-   //     {
+
 			//if (_offsetDir.y >= TOLERANCE)
 			//	correctionVec.y = -intersectHeight - TOLERANCE;
 			//else if (_offsetDir.y <= -TOLERANCE)
 			//	correctionVec.y = intersectHeight + TOLERANCE;
-   //     }
+   //     return correctionVec;
    // } 
+    
 	if (IsXAxisCollided) 
     {
-        if(_offsetDir.x >= TOLERANCE)
-			correctionVec.x = -intersectWidth - TOLERANCE;
-        else if(_offsetDir.x <= -TOLERANCE)
-			correctionVec.x = intersectWidth + TOLERANCE;
+        if (_offsetDir.x >= TOLERANCE)
+        {
+            correctionVec.x = -intersectWidth - TOLERANCE;
+        }
+        else if (_offsetDir.x <= -TOLERANCE)
+        {
+            correctionVec.x = intersectWidth + TOLERANCE;
+        }
+        else // x가 0인 경우
+        {
+            if (FromObjToTarget.x > 0) // target이 obj 앞에 있을 때
+				correctionVec.x = -intersectWidth - TOLERANCE;
+            else
+				correctionVec.x = intersectWidth + TOLERANCE;
+        }
     }
     else if(IsYAxisCollided)
     {
         if (_offsetDir.y >= TOLERANCE)
+        {
             correctionVec.y = -intersectHeight - TOLERANCE;
-        else if(_offsetDir.y <= -TOLERANCE)
+        }
+        else if (_offsetDir.y <= -TOLERANCE)
+        {
             correctionVec.y = intersectHeight + TOLERANCE;
+        }
+        else // y가 0인 경우
+        {
+            if (FromObjToTarget.y > 0) // target이 obj 앞에 있을 때
+				correctionVec.y = -intersectWidth - TOLERANCE;
+            else
+				correctionVec.y = intersectWidth + TOLERANCE;
+        }
+
     }
    
     return correctionVec;

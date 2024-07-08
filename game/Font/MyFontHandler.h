@@ -9,6 +9,8 @@ namespace MyProject
 	private:
 		std::vector<wstringV> externalFontNames;
 
+		std::map<UINT, RECT_F>	mDebugRect;
+
 	public:
 		~MyFontHandler();
 
@@ -18,7 +20,11 @@ namespace MyProject
 		void LoadExternalFontsAsFolder(const wstringV _fontFolder);
 		
 #ifdef _DEBUG
+		// 직각 좌표계 기준
+		void AddRectAreaForDebugging(UINT _key, RECT_F _rect);
+		void DrawRectForDebugging();
 		void DrawTextForDebugging(const wchar_t* format, ...);
+		void DrawRectForDebugging(RECT_F& _rect);
 #endif
 	};
 }

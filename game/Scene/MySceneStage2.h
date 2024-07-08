@@ -3,6 +3,10 @@
 #include "MyTileManager.h"
 #include "MyTextButton.h"
 #include "MyPlayer.h"
+#include "MyRuby.h"
+#include "MyWoodBox.h"
+#include "MyKey.h"
+#include "MyDoor.h"
 
 namespace MyProject
 {

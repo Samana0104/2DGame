@@ -53,6 +53,13 @@ void MyFontHandler::DrawTextAsKey(FONT_KEY _key, wstringV _msg, RECT_F _rect, CO
 }
 
 #ifdef _DEBUG
+
+void MyFontHandler::AddRectAreaForDebugging(UINT _key, RECT_F _rect)
+{
+	RECT_F rt = MyTransformer2D::CartesianToPixelRect(_rect);
+	mDebugRect[_key] = rt;
+}
+
 void MyFontHandler::DrawTextForDebugging(const wchar_t* format, ...)
 {
     va_list args;
@@ -79,6 +86,18 @@ void MyFontHandler::DrawTextForDebugging(const wchar_t* format, ...)
 	D3Device::GetInstance().mD2dRT->EndDraw();
 	DrawTextAsKey( L"DEBUG_FONT", L" [DEBUG WINDOW]", rc1, { 0.f, 0.f, 0.f, 1.f });
 	DrawTextAsKey( L"DEBUG_FONT", formattedMessage, rc2, { 0.f, 0.f, 0.f, 1.f });
+}
+
+void MyFontHandler::DrawRectForDebugging()
+{
+	auto a = GetResource(L"DEBUG_FONT")->GetBrush();
+
+	for (auto& rect : mDebugRect)
+	{
+		D3Device::GetInstance().mD2dRT->BeginDraw();
+		D3Device::GetInstance().mD2dRT->DrawRectangle(&(rect.second), a.Get());
+		D3Device::GetInstance().mD2dRT->EndDraw();
+	}
 }
 #endif
 
