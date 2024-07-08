@@ -18,6 +18,11 @@ void MySceneManager::SetCurrentScene(SCENE_KEY _key)
 	mQueueForWaiting.push(GetResource(_key));
 }
 
+void MySceneManager::SetCurrentScene(std::shared_ptr<MyScene> _scene)
+{
+	mQueueForWaiting.push(_scene);
+}
+
 void MySceneManager::Init()
 {
 	AddScene(std::make_shared<MySceneLobby>(*this), L"LOBBY");

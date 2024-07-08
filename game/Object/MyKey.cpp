@@ -2,7 +2,8 @@
 #include "MyKey.h"
 using namespace MyProject;
 
-MyKey::MyKey()
+MyKey::MyKey(MyObjectManager&  _objManager) :
+	mObjManager(_objManager)
 {
 	RECT_F collisionArea = { -5.5f, 2.7f, 6.f, -2.5f };
 	mTransform.SetScale({ 14.f, 10.f });
@@ -26,7 +27,7 @@ void MyKey::OnCollision(RECT_F& _self, RECT_F& _target, MyActor& _targetObj)
 	switch (targetObjCode)
 	{
 	case ObjectCode::DOOR:
-		MyObjectManager::GetInstance().DeleteObject(GetObjectID());
+		mObjManager.DeleteObject(GetObjectID());
 		break;
 
 	case ObjectCode::TILE:

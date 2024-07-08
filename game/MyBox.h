@@ -9,6 +9,7 @@ namespace MyProject
 	private:
 		
 	public:
+		
 	};
 }
 

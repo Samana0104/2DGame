@@ -4,12 +4,11 @@ using namespace MyProject;
 
 void MySceneStage1::Init()
 {
-	mCurrentButton = 0;
 	mTileMap.LoadScript(L"../data/Image/Tile/stage1.tile");
 	mPauseBackground.SetColor({ 0.f, 0.f, 0.f, 1.f });
 	mPauseBackground->SetScale({ 160.f, 90.f });
 	mPauseBackground.SetShaderKey(L"BackgroundPause.hlsl");
-	mButtons[0]->SetLocation({ 0.f, 11.f });
+	mButtons[0]->SetLocation({ 0.f, 11.f } );
 	mButtons[1]->SetLocation({ 0.f, 0.f });
 	mButtons[2]->SetLocation({ 0.f, -11.f });
 	mButtons[0].SetText(L"계속 하기");
@@ -17,6 +16,7 @@ void MySceneStage1::Init()
 	mButtons[2].SetText(L"메뉴로 나가기");
 	mButtons[mCurrentButton].SetCurrentState(SelectState::ACTIVE);
 }
+
 
 void MySceneStage1::Update(float _deltaTime)
 {
@@ -89,21 +89,6 @@ void MySceneStage1::Update(float _deltaTime)
 		mButtons[i].Update(_deltaTime);
 }
 
-void MySceneStage1::Render()
-{
-	mObjManager.Render();
-	if (isPause)
-	{
-		mPauseBackground.Render();
-		for (int i = 0; i < 3; i++)
-			mButtons[i].Render();
-	}
-}
-
-void MySceneStage1::Release()
-{
-}
-
 void MySceneStage1::Reset()
 {
 	mObjManager.ClearObject();
@@ -112,11 +97,11 @@ void MySceneStage1::Reset()
 
 void MySceneStage1::Start()
 {
-	auto woodBox1 = std::make_shared<MyWoodBox>();
-	auto woodBox2 = std::make_shared<MyWoodBox>();
-	auto woodBox3 = std::make_shared<MyWoodBox>();
-	auto player  = std::make_shared<MyPlayer>();
-	auto ruby  = std::make_shared<MyRuby>(mSceneManager);
+	auto player = std::make_unique<MyPlayer>();
+	auto woodBox1 = std::make_unique<MyWoodBox>();
+	auto woodBox2 = std::make_unique<MyWoodBox>();
+	auto woodBox3 = std::make_unique<MyWoodBox>();
+	auto ruby = std::make_unique<MyRuby>(mSceneManager);
 
 	(*player)->SetLocation({ -62.f, -27.f });
 	(*woodBox1)->SetLocation({ 12.f, -10.f });
@@ -130,9 +115,15 @@ void MySceneStage1::Start()
 	isPause = false;
 
 	mObjManager.SetTileManager(&mTileMap);
-	mObjManager.AddObject(player);
-	mObjManager.AddObject(woodBox1);
-	mObjManager.AddObject(woodBox2);
-	mObjManager.AddObject(woodBox3);
-	mObjManager.AddObject(ruby);
+
+	mObjManager.AddObject(std::move(player));
+	mObjManager.AddObject(std::move(woodBox1));
+	mObjManager.AddObject(std::move(woodBox2));
+	mObjManager.AddObject(std::move(woodBox3));
+	mObjManager.AddObject(std::move(ruby));
+}
+
+void MySceneStage1::End()
+{
+	mObjManager.ClearObject();
 }

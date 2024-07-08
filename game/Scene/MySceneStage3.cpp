@@ -92,22 +92,6 @@ void MySceneStage3::Update(float _deltaTime)
 	//mTileMap.ProcessCollision(mPlayer);
 }
 
-void MySceneStage3::Render()
-{
-	mObjManager.Render();
-
-	if (isPause)
-	{
-		mPauseBackground.Render();
-		for (int i = 0; i < 3; i++)
-			mButtons[i].Render();
-	}
-}
-
-void MySceneStage3::Release()
-{
-}
-
 void MySceneStage3::Reset()
 {
 	mObjManager.ClearObject();
@@ -116,15 +100,20 @@ void MySceneStage3::Reset()
 
 void MySceneStage3::Start()
 {
-	auto player  = std::make_shared<MyPlayer>();
-
-	(*player)->SetLocation({ 0.f, 30.f });
+	auto player = std::make_unique<MyPlayer>();
 
 	mButtons[mCurrentButton].SetCurrentState(SelectState::DEFAULT);
 	mCurrentButton = 0;
 	mButtons[mCurrentButton].SetCurrentState(SelectState::ACTIVE);
 	isPause = false;
 
+	(*player)->SetLocation({ 0.f, 30.f });
+	mObjManager.AddObject(std::move(player));
+
 	mObjManager.SetTileManager(&mTileMap);
-	mObjManager.AddObject(player);
+}
+
+void MySceneStage3::End()
+{
+	mObjManager.ClearObject();
 }

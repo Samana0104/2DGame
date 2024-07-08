@@ -167,19 +167,9 @@ vec2 CollisionComponent::GetCorrectionForCollision(const vec2 _offsetDir, const 
     // 두 충돌은 따로 특수처리
    // if (IsXAxisCollided && IsYAxisCollided)
    // {
-			//if (_offsetDir.x >= TOLERANCE)
-			//	correctionVec.x = -intersectWidth - TOLERANCE;
-			//else if (_offsetDir.x <= -TOLERANCE)
-			//	correctionVec.x = intersectWidth + TOLERANCE;
-
-			//if (_offsetDir.y >= TOLERANCE)
-			//	correctionVec.y = -intersectHeight - TOLERANCE;
-			//else if (_offsetDir.y <= -TOLERANCE)
-			//	correctionVec.y = intersectHeight + TOLERANCE;
    //     return correctionVec;
    // } 
-    
-	if (IsXAxisCollided) 
+    if (IsXAxisCollided) 
     {
         if (_offsetDir.x >= TOLERANCE)
         {
@@ -253,8 +243,8 @@ bool CollisionComponent::IsAABBCollision(const RECT_F& rt1, const RECT_F& rt2)
 	rt2Width = abs(rt2.right - rt2.left);// rt1.w + rt2.w;
 	rt2Height = abs(rt2.top - rt2.bottom);
 
-	if ((rt1Width + rt2Width) > sizeX && 
-        (rt1Height + rt2Height) > sizeY)
+	if ((rt1Width + rt2Width) - sizeX > TOLERANCE && 
+        (rt1Height + rt2Height) - sizeY > TOLERANCE)
 		return true;
 
 	return false;

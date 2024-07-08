@@ -241,6 +241,10 @@
       <Filter>Engine\Object</Filter>
     </ClInclude>
     <ClInclude Include="MyBox.h" />
+    <ClInclude Include="Scene\MyStageInterface.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MySceneStage3_1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font\MyFontHandler.cpp">
@@ -406,6 +410,10 @@
       <Filter>Engine\Object</Filter>
     </ClCompile>
     <ClCompile Include="MyBox.cpp" />
+    <ClCompile Include="Scene\MyStageInterface.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MySceneStage3_1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\data\shaders\PixelShader.hlsl">

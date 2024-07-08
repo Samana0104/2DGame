@@ -15,6 +15,7 @@ namespace MyProject
 
 	public:
 		void SetCurrentScene(SCENE_KEY _key);
+		void SetCurrentScene(std::shared_ptr<MyScene> _scene);
 
 		void Init();
 		void Update(const float _deltaTime);

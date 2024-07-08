@@ -15,7 +15,8 @@ namespace MyProject
 
 		MyInput&		   mInput	   = MyInput::GetInstance();
 		MyResourceManager& mManager	   = MyResourceManager::GetInstance();
-		MyObjectManager&   mObjManager = MyObjectManager::GetInstance();
+
+		MyObjectManager	   mObjManager;
 
 		//SCENE_KEY		mSceneID;
 		// 필요하면 추가함 
@@ -31,7 +32,7 @@ namespace MyProject
 		virtual void Release() = 0;
 		virtual void Reset()   = 0;
 		virtual void Start() = 0;
-		virtual void End() { mObjManager.ClearObject(); }
+		virtual void End() = 0;
 		virtual void Update(float _deltaTime) = 0;
 	};
 }

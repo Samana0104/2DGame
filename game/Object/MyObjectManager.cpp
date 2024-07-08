@@ -2,11 +2,11 @@
 #include "MyObjectManager.h"
 using namespace MyProject;
 
-void MyObjectManager::AddObject(std::shared_ptr<MyActor> _obj)
+void MyObjectManager::AddObject(std::unique_ptr<MyActor> _obj)
 {
 	registerObjID++;
 	_obj->SetObjectID(registerObjID);
-	mObjLists.insert(std::make_pair(registerObjID, _obj));
+	mObjLists.insert(std::make_pair(registerObjID, std::move(_obj)));
 }
 
 void MyObjectManager::ClearObject()

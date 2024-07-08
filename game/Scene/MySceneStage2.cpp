@@ -90,25 +90,6 @@ void MySceneStage2::Update(float _deltaTime)
 		mButtons[i].Update(_deltaTime);
 }
 
-void MySceneStage2::Render()
-{
-	mObjManager.Render();
-
-	if (isPause)
-	{
-		mPauseBackground.Render();
-		for (int i = 0; i < 3; i++)
-			mButtons[i].Render();
-	}
-	mManager.mFont.DrawTextForDebugging(L"%f %f",
-		MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).x,
-		MyTransformer2D::PixelToCartesian(mInput.GetCurrentMousePosVec2()).y);
-}
-
-void MySceneStage2::Release()
-{
-}
-
 void MySceneStage2::Reset()
 {
 	mObjManager.ClearObject();
@@ -117,11 +98,11 @@ void MySceneStage2::Reset()
 
 void MySceneStage2::Start()
 {
-	auto player  = std::make_shared<MyPlayer>();
-	auto woodBox1 = std::make_shared<MyWoodBox>();
-	auto ruby  = std::make_shared<MyRuby>(mSceneManager);
-	auto key  = std::make_shared<MyKey>();
-	auto door  = std::make_shared<MyDoor>();
+	auto player  = std::make_unique<MyPlayer>();
+	auto woodBox1 = std::make_unique<MyWoodBox>();
+	auto ruby  = std::make_unique<MyRuby>(mSceneManager);
+	auto key  = std::make_unique<MyKey>(mObjManager);
+	auto door  = std::make_unique<MyDoor>();
 
 	(*player)->SetLocation({ 0.f, -30.f });
 	(*woodBox1)->SetLocation({ -62.f, 4.f });
@@ -135,9 +116,14 @@ void MySceneStage2::Start()
 	isPause = false;
 
 	mObjManager.SetTileManager(&mTileMap);
-	mObjManager.AddObject(player);
-	mObjManager.AddObject(woodBox1);
-	mObjManager.AddObject(ruby);
-	mObjManager.AddObject(key);
-	mObjManager.AddObject(door);
+	mObjManager.AddObject(std::move(player));
+	mObjManager.AddObject(std::move(woodBox1));
+	mObjManager.AddObject(std::move(ruby));
+	mObjManager.AddObject(std::move(key));
+	mObjManager.AddObject(std::move(door));
+}
+
+void MySceneStage2::End()
+{
+	mObjManager.ClearObject();
 }
