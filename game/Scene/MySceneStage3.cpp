@@ -121,6 +121,10 @@ void MySceneStage3::Start()
 	mObjManager.AddObject(std::move(ruby));
 
 	mObjManager.SetTileManager(&mTileMap);
+
+	mManager.mSound[L"theme.ogg"]->Stop();
+	if(!mManager.mSound[L"ashrams.ogg"]->IsPlaying())
+		mManager.mSound[L"ashrams.ogg"]->Play(true);
 }
 
 void MySceneStage3::End()

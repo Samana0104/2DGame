@@ -121,6 +121,10 @@ void MySceneStage1::Start()
 	mObjManager.AddObject(std::move(woodBox2));
 	mObjManager.AddObject(std::move(woodBox3));
 	mObjManager.AddObject(std::move(ruby));
+
+	mManager.mSound[L"theme.ogg"]->Stop();
+	if (!mManager.mSound[L"ashrams.ogg"]->IsPlaying())
+		mManager.mSound[L"ashrams.ogg"]->Play(true);
 }
 
 void MySceneStage1::End()

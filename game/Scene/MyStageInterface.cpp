@@ -17,5 +17,7 @@ void MyStageInterface::Render()
 
 void MyStageInterface::Release()
 {
+	mManager.mSound[L"ashrams.ogg"]->Stop();
+
 	mObjManager.ClearObject();
 }

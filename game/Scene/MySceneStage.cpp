@@ -84,6 +84,7 @@ void MySceneStage::Render()
 
 void MySceneStage::Release()
 {
+	mManager.mSound[L"ashrams.ogg"]->Stop();
 }
 
 void MySceneStage::Reset()

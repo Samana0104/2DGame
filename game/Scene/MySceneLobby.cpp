@@ -83,8 +83,9 @@ void MySceneLobby::Reset()
 
 void MySceneLobby::Start()
 {
-	mManager.mSound[L"theme.ogg"]->InitSound();
+	mManager.mSound[L"theme.ogg"]->Stop();
 	mManager.mSound[L"theme.ogg"]->Play(true);
+	mManager.mSound[L"ashrams.ogg"]->Stop();
 }
 
 void MySceneLobby::End()
